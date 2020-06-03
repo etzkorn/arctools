@@ -13,6 +13,6 @@ extdata_fnames
 \description{
 Names of exemplary accelerometry data files attached to the package.
 These data can be accessed via
-\code{system.file("extdata", "data_file_name.csv", package = "arctools")}.
+\code{system.file("extdata", "<data_file_name>.csv", package = "arctools")}.
 }
 \keyword{datasets}
