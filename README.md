@@ -2,6 +2,7 @@ arctools
 ================
 
   - [Installation](#installation)
+  - [Documentation](#documentation)
   - [Using `arctools` package to compute physical activity
     summaries](#using-arctools-package-to-compute-physical-activity-summaries)
       - [Reading PA data](#reading-pa-data)
@@ -55,6 +56,11 @@ package if not yet installed (the line commened below).
 # install.packages("devtools")
 devtools::install_github("martakarass/arctools")
 ```
+
+## Documentation
+
+A PDF with detailed documentation of all methods can be accessed
+[here](https://www.dropbox.com/s/cfnud6zxntub7a7/arctools_0.1.1.pdf?dl=1).
 
 # Using `arctools` package to compute physical activity summaries
 
