@@ -3,6 +3,7 @@
 export(get_actigraph_SN)
 export(get_valid_day_flag)
 export(get_wear_flag)
+export(impute_missing_data)
 export(midnight_to_midnight)
 import(lubridate)
 importFrom(runstats,RunningMean)
