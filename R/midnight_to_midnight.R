@@ -42,7 +42,7 @@ midnight_to_midnight <- function(acc, acc_ts){
   ## Define day-specific minute for each observation
   obs_df <- data.frame(acc = acc, acc_ts = acc_ts, stringsAsFactors = FALSE)
   obs_df$ts_date_idx    <- as.integer(factor(as.Date(obs_df$acc_ts)))
-  obs_df$ts_minute_idx  <- as.integer(hour(obs_df$acc_ts) * 60 + minute(obs_df$acc_ts) + 1)
+  obs_df$ts_minute_idx  <- as.integer(lubridate::hour(obs_df$acc_ts) * 60 + lubridate::minute(obs_df$acc_ts) + 1)
 
   ## Filter observation data frame to keep unique timestamp observations only
   ## (handle rare margin case of duplicates with fall daylight time change)

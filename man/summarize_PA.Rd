@@ -13,6 +13,7 @@ summarize_PA(
   sedentary_thresh = 1853,
   subset_minutes = NULL,
   exclude_minutes = NULL,
+  subset_weekdays = NULL,
   in_bed_time = NULL,
   out_bed_time = NULL,
   adjust_out_colnames = TRUE
@@ -39,7 +40,7 @@ belongs to a valid day, and \code{0} otherwise. See
 \code{arctools::get_valid_day_flag()}.}
 
 \item{sedentary_thresh}{A numeric scalar. If an activity count value falls
-below it then a corresponding minute is characterized as sedentary; othervise,
+below it then a corresponding minute is characterized as sedentary; otherwise,
 a corresponding minute is characterized as active. Default is \code{1853}.}
 
 \item{subset_minutes}{Integer vector. Contains subset of a day's minutes
@@ -54,6 +55,11 @@ May take values from
 \code{1} (day's minute from 00:00 to 00:01) to
 \code{1440} (day's minute from 23:59 to 00:00). Default is \code{NULL}, i.e.
 no minutes excluded (all day's minutes are used).}
+
+\item{subset_weekdays}{Integer vector. Specfies days of a week within which
+activity summaries are to be computed. Takes values between 1 (Sunday) to
+7 (Saturday). Default is \code{NULL}, i.e.no subset used
+(all days of a week are used).}
 
 \item{in_bed_time}{A POSIXct vector. An estimated in-bed time start.
 Together with a corresponding entry from \code{out_bed_time} vector,

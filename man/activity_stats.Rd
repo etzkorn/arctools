@@ -10,8 +10,11 @@ activity_stats(
   acc_ts,
   impute_missing = TRUE,
   sedentary_thresh = 1853,
+  nonwear_0s_minimum_window = 90,
+  validday_nonwear_maximum_window = 144,
   subset_minutes = NULL,
   exclude_minutes = NULL,
+  subset_weekdays = NULL,
   in_bed_time = NULL,
   out_bed_time = NULL,
   adjust_out_colnames = TRUE
@@ -27,8 +30,15 @@ data collection.}
 data imputation (see Details). Default is \code{TRUE}.}
 
 \item{sedentary_thresh}{A numeric scalar. If an activity count value falls
-below it then a corresponding minute is characterized as sedentary; othervise,
+below it then a corresponding minute is characterized as sedentary; otherwise,
 a corresponding minute is characterized as active. Default is \code{1853}.}
+
+\item{nonwear_0s_minimum_window}{A numeric scalar. A minimum number of consecutive
+minutes with 0 activity count to be considered non-wear.}
+
+\item{validday_nonwear_maximum_window}{In integer scalar. Maximum number of minutes of non-wear/not
+collecting data so as the day is still considered valid. Default is \code{144}
+(10\% of 1440 minutes of a full day).}
 
 \item{subset_minutes}{Integer vector. Contains subset of a day's minutes
 within which activity summaries are to be computed. May take values from
@@ -42,6 +52,11 @@ May take values from
 \code{1} (day's minute from 00:00 to 00:01) to
 \code{1440} (day's minute from 23:59 to 00:00). Default is \code{NULL}, i.e.
 no minutes excluded (all day's minutes are used).}
+
+\item{subset_weekdays}{Integer vector. Specfies days of a week within which
+activity summaries are to be computed. Takes values between 1 (Sunday) to
+7 (Saturday). Default is \code{NULL}, i.e.no subset used
+(all days of a week are used).}
 
 \item{in_bed_time}{A POSIXct vector. An estimated in-bed time start.
 Together with a corresponding entry from \code{out_bed_time} vector,
@@ -124,4 +139,9 @@ with mortality in US adults: The NHANES study. https://doi.org/10.1101/182337
 Choi, L., Liu, Z., Matthews, C. E., & Buchowski, M. S. (2011). Validation of
 accelerometer wear and nonwear time classification algorithm. Medicine and
 Science in Sports and Exercise. https://doi.org/10.1249/MSS.0b013e3181ed61a3
+
+Koster, A., Shiroma, E. J., Caserotti, P., Matthews, C. E., Chen, K. Y.,
+Glynn, N. W., & Harris, T. B. (2016). Comparison of Sedentary Estimates
+between activPAL and Hip- and Wrist-Worn ActiGraph. Medicine and science in
+sports and exercise, 48(8), 1514–1522. https://doi.org/10.1249/MSS.0000000000000924
 }

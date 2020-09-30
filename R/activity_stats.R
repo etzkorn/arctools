@@ -24,8 +24,13 @@
 #' @param impute_missing A logical scalar. Whether or not to perform missing
 #' data imputation (see Details). Default is \code{TRUE}.
 #' @param sedentary_thresh A numeric scalar. If an activity count value falls
-#' below it then a corresponding minute is characterized as sedentary; othervise,
+#' below it then a corresponding minute is characterized as sedentary; otherwise,
 #' a corresponding minute is characterized as active. Default is \code{1853}.
+#' @param nonwear_0s_minimum_window A numeric scalar. A minimum number of consecutive
+#' minutes with 0 activity count to be considered non-wear.
+#' @param validday_nonwear_maximum_window In integer scalar. Maximum number of minutes of non-wear/not
+#' collecting data so as the day is still considered valid. Default is \code{144}
+#' (10\% of 1440 minutes of a full day).
 #' @param subset_minutes Integer vector. Contains subset of a day's minutes
 #' within which activity summaries are to be computed. May take values from
 #' \code{1} (day's minute from 00:00 to 00:01) to
@@ -37,6 +42,10 @@
 #' \code{1} (day's minute from 00:00 to 00:01) to
 #' \code{1440} (day's minute from 23:59 to 00:00). Default is \code{NULL}, i.e.
 #' no minutes excluded (all day's minutes are used).
+#' @param subset_weekdays Integer vector. Specfies days of a week within which
+#' activity summaries are to be computed. Takes values between 1 (Sunday) to
+#' 7 (Saturday). Default is \code{NULL}, i.e.no subset used
+#' (all days of a week are used).
 #' @param in_bed_time A POSIXct vector. An estimated in-bed time start.
 #' Together with a corresponding entry from \code{out_bed_time} vector,
 #' it defines a
@@ -100,16 +109,25 @@
 #' accelerometer wear and nonwear time classification algorithm. Medicine and
 #' Science in Sports and Exercise. https://doi.org/10.1249/MSS.0b013e3181ed61a3
 #'
+#' Koster, A., Shiroma, E. J., Caserotti, P., Matthews, C. E., Chen, K. Y.,
+#' Glynn, N. W., & Harris, T. B. (2016). Comparison of Sedentary Estimates
+#' between activPAL and Hip- and Wrist-Worn ActiGraph. Medicine and science in
+#' sports and exercise, 48(8), 1514–1522. https://doi.org/10.1249/MSS.0000000000000924
+#'
 activity_stats <- function(
   acc,
   acc_ts,
   impute_missing = TRUE,
   sedentary_thresh = 1853,
+  nonwear_0s_minimum_window = 90,
+  validday_nonwear_maximum_window = 144,
   subset_minutes = NULL,
   exclude_minutes = NULL,
+  subset_weekdays = NULL,
   in_bed_time = NULL,
   out_bed_time = NULL,
-  adjust_out_colnames = TRUE)
+  adjust_out_colnames = TRUE
+)
 {
 
   ## Checks for arguments
@@ -123,10 +141,10 @@ activity_stats <- function(
   acc <- midnight_to_midnight(acc, acc_ts)
 
   ## Get wear/non-wear flag
-  wear_flag <- get_wear_flag(acc)
+  wear_flag <- get_wear_flag(acc, nonwear_0s_minimum_window = nonwear_0s_minimum_window)
 
   ## Get valid/non-valid day flag
-  valid_day_flag <- get_valid_day_flag(wear_flag)
+  valid_day_flag <- get_valid_day_flag(wear_flag, validday_nonwear_maximum_window = validday_nonwear_maximum_window)
 
   ## Impute missing data in acc data vector
   if (impute_missing){
@@ -142,6 +160,7 @@ activity_stats <- function(
     sedentary_thresh = sedentary_thresh,
     subset_minutes = subset_minutes,
     exclude_minutes = exclude_minutes,
+    subset_weekdays = subset_weekdays,
     in_bed_time = in_bed_time,
     out_bed_time = out_bed_time,
     adjust_out_colnames = adjust_out_colnames)
