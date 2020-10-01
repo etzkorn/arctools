@@ -11,12 +11,14 @@ arctools
       - [Output explained](#output-explained)
   - [Additional`activity_stats` method
     options](#additionalactivity_stats-method-options)
-      - [Summarizing PA only in a chosen time-of-day
-        subset](#summarizing-pa-only-in-a-chosen-time-of-day-subset)
-      - [Summarizing PA with a chosen time-of-day
-        excluded](#summarizing-pa-with-a-chosen-time-of-day-excluded)
-      - [Summarizing PA excluding in-bed
-        time](#summarizing-pa-excluding-in-bed-time)
+      - [Summarizing PA within a fixed set of minutes
+        only](#summarizing-pa-within-a-fixed-set-of-minutes-only)
+      - [Summarizing PA within a subset of weekdays
+        only](#summarizing-pa-within-a-subset-of-weekdays-only)
+      - [Summarizing PA with a fixed set of minutes
+        excluded](#summarizing-pa-with-a-fixed-set-of-minutes-excluded)
+      - [Summarizing PA with in-bed time
+        excluded](#summarizing-pa-with-in-bed-time-excluded)
   - [Components of `activity_stats`
     method](#components-of-activity_stats-method)
       - [Expand the length of minute-level AC vector to integer number
@@ -399,7 +401,7 @@ Summaries of PA fragmentation metrics:
 
 # Additional`activity_stats` method options
 
-### Summarizing PA only in a chosen time-of-day subset
+### Summarizing PA within a fixed set of minutes only
 
 The `subset_minutes` argument allows to specify subset of a day’s
 minutes where activity summaries should be computed. There are 1440
@@ -1260,7 +1262,249 @@ mean\_nonactive\_bout
 
 </table>
 
-### Summarizing PA with a chosen time-of-day excluded
+### Summarizing PA within a subset of weekdays only
+
+The `subset_weekdays` argument allows to specify days of a week within
+which activity summaries are to be computed; it takes values between 1
+(Sunday) to 7 (Saturday). Default is `NULL`, all days of a week are
+used.
+
+Here, we summarize PA within weekday days only
+
+``` r
+subset_weekdays <- c(2:6)
+activity_stats(acc, acc_ts, subset_weekdays = subset_weekdays) 
+```
+
+<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+n\_days
+
+</th>
+
+<th style="text-align:right;">
+
+n\_valid\_days
+
+</th>
+
+<th style="text-align:right;">
+
+wear\_time\_on\_valid\_days
+
+</th>
+
+<th style="text-align:right;">
+
+tac\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+tlac\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+ltac\_weekdays23456only
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+8
+
+</td>
+
+<td style="text-align:right;">
+
+4
+
+</td>
+
+<td style="text-align:right;">
+
+1440
+
+</td>
+
+<td style="text-align:right;">
+
+2149284
+
+</td>
+
+<td style="text-align:right;">
+
+4833.116
+
+</td>
+
+<td style="text-align:right;">
+
+14.58065
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+astp\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+satp\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+time\_spent\_active\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+time\_spent\_nonactive\_weekdays23456only
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+0.1757294
+
+</td>
+
+<td style="text-align:right;">
+
+0.0945946
+
+</td>
+
+<td style="text-align:right;">
+
+377
+
+</td>
+
+<td style="text-align:right;">
+
+703
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+no\_of\_active\_bouts\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+no\_of\_nonactive\_bouts\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+mean\_active\_bout\_weekdays23456only
+
+</th>
+
+<th style="text-align:right;">
+
+mean\_nonactive\_bout\_weekdays23456only
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+66.25
+
+</td>
+
+<td style="text-align:right;">
+
+66.5
+
+</td>
+
+<td style="text-align:right;">
+
+5.690566
+
+</td>
+
+<td style="text-align:right;">
+
+10.57143
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+### Summarizing PA with a fixed set of minutes excluded
 
 The `exclude_minutes` argument allows to specify subset of a day’s
 minutes excluded for computing activity summaries.
@@ -1504,7 +1748,7 @@ mean\_nonactive\_bout\_23to5removed
 
 </table>
 
-### Summarizing PA excluding in-bed time
+### Summarizing PA with in-bed time excluded
 
 The `in_bed_time` and `out_bed_time` arguments allow to provide
 day-specific in-bed periods to be excluded from analysis.

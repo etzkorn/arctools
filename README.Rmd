@@ -138,7 +138,7 @@ Summaries of PA fragmentation metrics:
 
 # Additional`activity_stats` method options
 
-### Summarizing PA only in a chosen time-of-day subset 
+### Summarizing PA within a fixed set of minutes only
 
 The `subset_minutes` argument allows to specify subset of a day's minutes where activity summaries should be computed. There are 1440 minutes in a 24-hour day where `1` denotes 1st minute of the day (from 00:00 to 00:01), and `1440` denotes the last minute (from 23:59 to 00:00). 
 
@@ -180,8 +180,27 @@ tbl_3 <- kable(out[, 11:14]) %>% tbl_styl_f(.)
 tbl_1; tbl_2; tbl_3
 ```
 
+### Summarizing PA within a subset of weekdays only
 
-### Summarizing PA with a chosen time-of-day excluded
+The `subset_weekdays` argument allows to specify days of a week within which activity summaries are to be computed; it takes values between 1 (Sunday) to 7 (Saturday). Default is `NULL`, all days of a week are used.
+
+Here, we summarize PA within weekday days only
+
+```{r, results = 'hide'}
+subset_weekdays <- c(2:6)
+activity_stats(acc, acc_ts, subset_weekdays = subset_weekdays) 
+```
+
+```{r, echo = FALSE}
+out <- activity_stats(acc, acc_ts, subset_weekdays = subset_weekdays) 
+tbl_1 <- kable(out[, 1:6]) %>% tbl_styl_f(.)
+tbl_2 <- kable(out[, 7:10]) %>% tbl_styl_f(.)
+tbl_3 <- kable(out[, 11:14]) %>% tbl_styl_f(.)
+tbl_1; tbl_2; tbl_3
+```
+
+
+### Summarizing PA with a fixed set of minutes excluded
 
 The `exclude_minutes` argument allows to specify subset of a day's minutes excluded for computing activity summaries. 
 
@@ -204,7 +223,7 @@ tbl_1; tbl_2; tbl_3
 ```
 
 
-### Summarizing PA excluding in-bed time 
+### Summarizing PA with in-bed time excluded
 
 The `in_bed_time` and `out_bed_time` arguments allow to provide day-specific in-bed periods to be excluded from analysis. 
 
