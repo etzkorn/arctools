@@ -2,7 +2,7 @@
 require(lubridate)
 
 #' @noRd
-arg_check_acc <- function(acc){
+arg_check_acc_m2m <- function(acc){
 
   ## Check if acc length is a multiple of 1440 (number of minutes in a day)
   acc_n <- length(acc)

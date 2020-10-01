@@ -70,7 +70,7 @@
 impute_missing_data <- function(acc, wear_flag, valid_day_flag, imputeFromValidDaysOnly = TRUE){
 
   ## Argument checks
-  arg_check_acc(acc)
+  arg_check_acc_m2m(acc)
   arg_check_wear_flag(wear_flag)
   arg_check_valid_day_flag(valid_day_flag)
 

@@ -1,4 +1,26 @@
 
+#' @noRd
+return_out_NAfilled <- function(N_days, N_valid_days, out_names_suffix, adjust_out_colnames){
+  out_names <- c(
+    'N_days', 'N_valid_days', 'wear_time_on_valid_days',
+    'TAC', 'TLAC', 'LTAC',
+    'astp', 'satp',
+    'time_spent_active', 'time_spent_nonactive',
+    'no_of_active_bouts', 'no_of_nonactive_bouts',
+    'mean_active_bout', 'mean_nonactive_bout'
+  )
+  out <- data.frame(matrix(NA, nrow = 1, ncol = length(out_names)))
+  names(out) <- out_names
+  out$N_days <- N_days
+  out$N_valid_days <- N_valid_days
+  if (adjust_out_colnames){
+    names(out)[-(1:3)] <- paste0(names(out)[-(1:3)], out_names_suffix)
+  }
+  names(out) <- tolower(names(out))
+  return(out)
+}
+
+
 
 #' Compute physical activity summaries of minute level activity
 #' data.
@@ -110,7 +132,7 @@ summarize_PA = function(
 {
 
   ## Checks for arguments
-  arg_check_acc(acc)
+  arg_check_acc_m2m(acc)
   arg_check_acc_ts(acc_ts)
   arg_check_wear_flag(wear_flag)
   arg_check_valid_day_flag(valid_day_flag)
@@ -164,10 +186,44 @@ summarize_PA = function(
     out_names_suffix <- paste0(out_names_suffix, '_', h_start, 'to', h_end, 'Only')
   }
 
+  ## SUBSET (D): USE FIXED WEEKDAYS ONLY
+  if (!is.null(subset_weekdays)){
+    # Define mapping of timestamp vector onto unique day dates
+    acc_ts_unq_date <- sort(unique(date(acc_ts)))
+    acc_ts_unq_date_weekday <- wday(acc_ts_unq_date)
+    # Define mapping of unique day dates into unique
+    ## Vector to [n_days x n_minutes_per_day] form
+    acc_mat <- matrix(acc, ncol = 1440, byrow = TRUE)
+    ## Replace with NA values on elements corresponding to days other than provided subset
+    acc_mat[which(!(acc_ts_unq_date_weekday %in% subset_weekdays)), ] <- NA
+    ## Send message
+    acc_ts_unq_date_SUB <- acc_ts_unq_date[acc_ts_unq_date_weekday %in% subset_weekdays]
+    # message(paste0("Computing summary for ", length(acc_ts_unq_date_SUB), "/", length(acc_ts_unq_date_weekday),
+    #                " days: ", paste0(acc_ts_unq_date_SUB, collapse = ", ")))
+    acc <- as.vector(t(acc_mat))
+    ## Define output summary colnames suffix based on subset
+    weekdays_sub <- paste0(sort(unique(subset_weekdays)), collapse = "")
+    out_names_suffix <- paste0(out_names_suffix, '_Weekdays', weekdays_sub, 'Only')
+  }
 
   ## Replace non-valid days with NA
   acc_validOnly <- acc
   acc_validOnly[which(valid_day_flag == 0)] <- NA
+
+  ## If no valid days, return empty data frame
+  if (N_valid_days == 0){
+    message("0 valid days identified. Returning data frame with NAs.")
+    out <- return_out_NAfilled(N_days, N_valid_days, out_names_suffix, adjust_out_colnames)
+    return(out)
+  }
+
+  ## If all values are NA, return empty data frame (this can happen i.e. when
+  ## we want to compute data from weekends only but there is no weekend data)
+  if (all(is.na(acc_validOnly))){
+    message("0 days to compute summaries from. Returning data frame with NAs.")
+    out <- return_out_NAfilled(N_days, N_valid_days, out_names_suffix, adjust_out_colnames)
+    return(out)
+  }
 
   ## COMPUTE PA VOLUME STATISTICS
   TAC  <- sum(acc_validOnly, na.rm = TRUE)/N_valid_days
@@ -219,12 +275,6 @@ summarize_PA = function(
     no_of_active_bouts, no_of_nonactive_bouts,
     mean_active_bout, mean_nonactive_bout
   )
-
-  ## Correct if no valid days
-  if (N_valid_days == 0){
-    out[, 3:ncol(out)] <- NA
-  }
-
 
   ## Format column names
   if (adjust_out_colnames){

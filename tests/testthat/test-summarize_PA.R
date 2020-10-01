@@ -253,6 +253,7 @@ test_that_desc <- paste0(
   "The same output values")
 test_that(test_that_desc, {
   for (i in 1:length(acc_list)){ # i <- 4
+    print(i)
     out1 <- SummarizePA_JU_out_list[[i]]
     out2 <- SummarizePA_out_list[[i]]
     expect_equal(unlist(out1), unlist(out2))
@@ -570,5 +571,6 @@ test_that(test_that_desc, {
                  in_bed_time = in_bed_time, out_bed_time = out_bed_time[1:(length(out_bed_time)-1)])
   })
 })
+
 
 
