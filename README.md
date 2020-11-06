@@ -1266,8 +1266,8 @@ mean\_nonactive\_bout
 
 The `subset_weekdays` argument allows to specify days of a week within
 which activity summaries are to be computed; it takes values between 1
-(Sunday) to 7 (Saturday). Default is `NULL`, all days of a week are
-used.
+(Sunday) to 7 (Saturday). Default is `NULL` (all days of a week are
+used).
 
 Here, we summarize PA within weekday days only
 
