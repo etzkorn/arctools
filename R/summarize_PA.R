@@ -187,20 +187,24 @@ summarize_PA = function(
   }
 
   ## SUBSET (D): USE FIXED WEEKDAYS ONLY
+  ## (case different than the above as we exclude full days here)
   if (!is.null(subset_weekdays)){
     # Define mapping of timestamp vector onto unique day dates
     acc_ts_unq_date <- sort(unique(date(acc_ts)))
     acc_ts_unq_date_weekday <- wday(acc_ts_unq_date)
-    # Define mapping of unique day dates into unique
-    ## Vector to [n_days x n_minutes_per_day] form
-    acc_mat <- matrix(acc, ncol = 1440, byrow = TRUE)
+    ## 1. UPDATE acc
     ## Replace with NA values on elements corresponding to days other than provided subset
+    acc_mat <- matrix(acc, ncol = 1440, byrow = TRUE)
     acc_mat[which(!(acc_ts_unq_date_weekday %in% subset_weekdays)), ] <- NA
-    ## Send message
-    acc_ts_unq_date_SUB <- acc_ts_unq_date[acc_ts_unq_date_weekday %in% subset_weekdays]
-    # message(paste0("Computing summary for ", length(acc_ts_unq_date_SUB), "/", length(acc_ts_unq_date_weekday),
-    #                " days: ", paste0(acc_ts_unq_date_SUB, collapse = ", ")))
     acc <- as.vector(t(acc_mat))
+    ## 2. UPDATE valid_day_flag
+    valid_day_flag_mat <- matrix(valid_day_flag, ncol = 1440, byrow = TRUE)
+    valid_day_flag_mat[which(!(acc_ts_unq_date_weekday %in% subset_weekdays)), ] <- 0
+    valid_day_flag <- as.vector(t(valid_day_flag_mat))
+    ## 3. UPDATE N_days
+    N_days       <- sum(acc_ts_unq_date_weekday %in% subset_weekdays)
+    ## 4. UPDATE N_valid_days
+    N_valid_days <- sum(valid_day_flag_mat) / 1440
     ## Define output summary colnames suffix based on subset
     weekdays_sub <- paste0(sort(unique(subset_weekdays)), collapse = "")
     out_names_suffix <- paste0(out_names_suffix, '_Weekdays', weekdays_sub, 'Only')

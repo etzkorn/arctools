@@ -68,25 +68,35 @@ test_that("Error ocurrs when subset_weekdays arg is misspecified", {
   })
 })
 
+
 test_that("The value of activity_stats remains unchanged", {
 
-  out_act <- unlist(activity_stats(acc, acc_ts, subset_weekdays = c(6,7)))
+  out_act <- unlist(activity_stats(acc, acc_ts))
   out_exp <- c(n_days = 7, n_valid_days = 7, wear_time_on_valid_days = 1440,
-               tac_weekdays67only = 2058690.28571429, tlac_weekdays67only = 3374.74392287859,
-               ltac_weekdays67only = 14.5375805549358, astp_weekdays67only = 0.181624840493407,
-               satp_weekdays67only = 0.805293005671077, time_spent_active_weekdays67only = 335.857142857143,
-               time_spent_nonactive_weekdays67only = 75.5714285714286, no_of_active_bouts_weekdays67only = 61,
-               no_of_nonactive_bouts_weekdays67only = 60.8571428571429, mean_active_bout_weekdays67only = 5.50585480093677,
-               mean_nonactive_bout_weekdays67only = 1.24178403755869)
+               tac = 7197993.14285714, tlac = 11813.1031994869, ltac = 15.7893128149751,
+               astp = 0.187064433304805, satp = 0.804313519200421, time_spent_active = 1168.42857142857,
+               time_spent_nonactive = 271.571428571429, no_of_active_bouts = 218.571428571429,
+               no_of_nonactive_bouts = 218.428571428571, mean_active_bout = 5.34575163398693,
+               mean_nonactive_bout = 1.24329627207325)
   expect_equal(out_act, out_exp)
 
-  out_act <- unlist(activity_stats(acc, acc_ts, subset_weekdays = c(1:5)))
-  out_exp <- c(n_days = 7, n_valid_days = 7, wear_time_on_valid_days = 1440,
-               tac_weekdays12345only = 5139302.85714286, tlac_weekdays12345only = 8438.35927660827,
-               ltac_weekdays12345only = 15.4524279973266, astp_weekdays12345only = 0.189601921757035,
-               satp_weekdays12345only = 0.803935860058309, time_spent_active_weekdays12345only = 832.571428571429,
-               time_spent_nonactive_weekdays12345only = 196, no_of_active_bouts_weekdays12345only = 157.857142857143,
-               no_of_nonactive_bouts_weekdays12345only = 157.571428571429, mean_active_bout_weekdays12345only = 5.27420814479638,
-               mean_nonactive_bout_weekdays12345only = 1.24388032638259)
+  out_act <- unlist(activity_stats(acc, acc_ts, subset_weekdays = c(7,1)))
+  out_exp <- c(n_days = 2, n_valid_days = 2, wear_time_on_valid_days = 1440,
+               tac_weekdays17only = 7107296, tlac_weekdays17only = 11791.0154371118,
+               ltac_weekdays17only = 15.7766324200201, astp_weekdays17only = 0.194145501506672,
+               satp_weekdays17only = 0.807899461400359, time_spent_active_weekdays17only = 1161.5,
+               time_spent_nonactive_weekdays17only = 278.5, no_of_active_bouts_weekdays17only = 225.5,
+               no_of_nonactive_bouts_weekdays17only = 225, mean_active_bout_weekdays17only = 5.15077605321508,
+               mean_nonactive_bout_weekdays17only = 1.23777777777778)
+  expect_equal(out_act, out_exp)
+
+  out_act <- unlist(activity_stats(acc, acc_ts, subset_weekdays = c(2:6)))
+  out_exp <- c(n_days = 5, n_valid_days = 5, wear_time_on_valid_days = 1440,
+               tac_weekdays23456only = 7234272, tlac_weekdays23456only = 11821.9383044369,
+               ltac_weekdays23456only = 15.7943402910085, astp_weekdays23456only = 0.184426229508197,
+               satp_weekdays23456only = 0.802827380952381, time_spent_active_weekdays23456only = 1171.2,
+               time_spent_nonactive_weekdays23456only = 268.8, no_of_active_bouts_weekdays23456only = 216,
+               no_of_nonactive_bouts_weekdays23456only = 215.8, mean_active_bout_weekdays23456only = 5.42222222222222,
+               mean_nonactive_bout_weekdays23456only = 1.24559777571826)
   expect_equal(out_act, out_exp)
 })

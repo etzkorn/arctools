@@ -1269,9 +1269,14 @@ which activity summaries are to be computed; it takes values between 1
 (Sunday) to 7 (Saturday). Default is `NULL` (all days of a week are
 used).
 
-Here, we summarize PA within weekday days only
+Here, we summarize PA within weekday days only. **Note the `n_days` and
+`n_valid_days` columns summarize the days which match the days of a week
+subset condition only**; for example, below, `n_days` number of unique
+day dates in data is 6 despite the range of data collection without
+subsetting ranges 8 days.
 
 ``` r
+# day of a week indices 2,3,4,5,6 correspond to Mon,Tue,Wed,Thu,Fri 
 subset_weekdays <- c(2:6)
 activity_stats(acc, acc_ts, subset_weekdays = subset_weekdays) 
 ```
@@ -1328,13 +1333,13 @@ ltac\_weekdays23456only
 
 <td style="text-align:right;">
 
-8
+6
 
 </td>
 
 <td style="text-align:right;">
 
-4
+3
 
 </td>
 
@@ -1346,19 +1351,19 @@ ltac\_weekdays23456only
 
 <td style="text-align:right;">
 
-2149284
+2865711
 
 </td>
 
 <td style="text-align:right;">
 
-4833.116
+6444.155
 
 </td>
 
 <td style="text-align:right;">
 
-14.58065
+14.86833
 
 </td>
 
@@ -1420,13 +1425,13 @@ time\_spent\_nonactive\_weekdays23456only
 
 <td style="text-align:right;">
 
-377
+502.6667
 
 </td>
 
 <td style="text-align:right;">
 
-703
+937.3333
 
 </td>
 
@@ -1476,13 +1481,13 @@ mean\_nonactive\_bout\_weekdays23456only
 
 <td style="text-align:right;">
 
-66.25
+88.33333
 
 </td>
 
 <td style="text-align:right;">
 
-66.5
+88.66667
 
 </td>
 
@@ -1495,6 +1500,244 @@ mean\_nonactive\_bout\_weekdays23456only
 <td style="text-align:right;">
 
 10.57143
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+Note the `subset_weekdays` argument can be combined with other
+arguments, i.e. `subset_minutes` to subset of a day’s minutes where
+activity summaries should be computed.
+
+``` r
+# day of a week indices 7,1 correspond to Sat,Sun
+subset_weekdays <- c(7,1)
+activity_stats(acc, acc_ts, subset_weekdays = subset_weekdays, subset_minutes = subset_6am_12pm) 
+```
+
+<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+n\_days
+
+</th>
+
+<th style="text-align:right;">
+
+n\_valid\_days
+
+</th>
+
+<th style="text-align:right;">
+
+wear\_time\_on\_valid\_days
+
+</th>
+
+<th style="text-align:right;">
+
+tac\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+tlac\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+ltac\_6to12only\_weekdays17only
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+2
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+<td style="text-align:right;">
+
+1440
+
+</td>
+
+<td style="text-align:right;">
+
+917368
+
+</td>
+
+<td style="text-align:right;">
+
+2071.864
+
+</td>
+
+<td style="text-align:right;">
+
+13.72926
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+astp\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+satp\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+time\_spent\_active\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+time\_spent\_nonactive\_6to12only\_weekdays17only
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+0.1840491
+
+</td>
+
+<td style="text-align:right;">
+
+0.1522843
+
+</td>
+
+<td style="text-align:right;">
+
+163
+
+</td>
+
+<td style="text-align:right;">
+
+197
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+no\_of\_active\_bouts\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+no\_of\_nonactive\_bouts\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+mean\_active\_bout\_6to12only\_weekdays17only
+
+</th>
+
+<th style="text-align:right;">
+
+mean\_nonactive\_bout\_6to12only\_weekdays17only
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+30
+
+</td>
+
+<td style="text-align:right;">
+
+30
+
+</td>
+
+<td style="text-align:right;">
+
+5.433333
+
+</td>
+
+<td style="text-align:right;">
+
+6.566667
 
 </td>
 
