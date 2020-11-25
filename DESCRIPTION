@@ -20,7 +20,8 @@ Suggests:
     data.table,
     dplyr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
 Imports: 
     lubridate,
     runstats
