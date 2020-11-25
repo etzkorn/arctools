@@ -1,19 +1,19 @@
 ---
-title: "arctools"
-output:
-  github_document:
+title: "arctools_intro"
+output: 
+  rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
-always_allow_html: true
+vignette: >
+  %\VignetteIndexEntry{arctools_intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
   out.width = "100%",
   echo = TRUE, 
   cache = FALSE, 
@@ -21,26 +21,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 The `arctools` package allows to generate summaries of the minute-level physical activity (PA) data. The default parameters are chosen for the Actigraph activity counts collected with a wrist-worn device; however, the package can be used for other minute-level PA data with the corresponding timepstamps vector.
 
 Below, we demonstrate the use of `arctools` with the attached, exemplary minute-level Actigraph PA counts data.
-
-## Installation
-
-You can install the released version of `arctools` from [GitHub](https://github.com/). Note you may need to install `devtools` package if not yet installed (the line commented below). 
-
-
-``` r
-# install.packages("devtools")
-devtools::install_github("martakarass/arctools")
-```
-
-## Documentation 
-
-A PDF with detailed documentation of all methods can be accessed [here](https://www.dropbox.com/s/cfnud6zxntub7a7/arctools_0.1.1.pdf?dl=1). 
 
 # Using `arctools` package to compute physical activity summaries
 
@@ -52,8 +35,8 @@ Four CSV data sets with minute-level activity counts data are attached to the `a
 library(arctools)
 library(data.table)
 library(dplyr)
-library(lubridate)
 library(ggplot2)
+library(lubridate)
 
 ## Read one of the data sets
 fpath <- system.file("extdata", extdata_fnames[1], package = "arctools")
@@ -78,6 +61,7 @@ ggplot(dat, aes(x = ymd_hms(timestamp), y = vectormagnitude)) +
   theme_gray(base_size = 10) + 
   scale_x_datetime(date_breaks = "1 day", date_labels = "%b %d")
 ```
+
 
 ### Computing summaries with `activity_stats` method
 
@@ -240,7 +224,7 @@ rbind(head(df, 3), tail(df, 3))
 ```
 
 
-### Expand the length of minute-level AC vector to full 24-hour periods with `midnight_to_midnight`
+### Expand the length of minute-level AC vector to integer number of full 24-hour periods by NA-padding with `midnight_to_midnight`
 
 - In the returned vector, the first observation corresponds to the minute of `00:00-00:01` on the first day of data collection, and the last observation corresponds to the minute of `23:50-00:00` on the last day of data collection. 
 - Entries corresponding to non-measured minutes are filled with `NA`.

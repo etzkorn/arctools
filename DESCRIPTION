@@ -18,7 +18,10 @@ LazyData: true
 Suggests: 
     testthat,
     data.table,
-    dplyr
+    dplyr,
+    knitr,
+    rmarkdown
 Imports: 
     lubridate,
     runstats
+VignetteBuilder: knitr
