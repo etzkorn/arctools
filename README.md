@@ -37,6 +37,8 @@ arctools
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.com/martakarass/arctools.svg?branch=master)](https://travis-ci.com/martakarass/arctools)
 <!-- badges: end -->
 
 The `arctools` package allows to generate summaries of the minute-level
