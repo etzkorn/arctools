@@ -42,7 +42,7 @@ arctools
 The `arctools` package allows to generate summaries of the minute-level
 physical activity (PA) data. The default parameters are chosen for the
 Actigraph activity counts collected with a wrist-worn device; however,
-the package can be used for all minute-level PA data with the
+the package can be used for other minute-level PA data with the
 corresponding timepstamps vector.
 
 Below, we demonstrate the use of `arctools` with the attached, exemplary
@@ -50,9 +50,9 @@ minute-level Actigraph PA counts data.
 
 ## Installation
 
-You can install the released version of arctools from
+You can install the released version of `arctools` from
 [GitHub](https://github.com/). Note you may need to install `devtools`
-package if not yet installed (the line commened below).
+package if not yet installed (the line commented below).
 
 ``` r
 # install.packages("devtools")
@@ -70,7 +70,8 @@ A PDF with detailed documentation of all methods can be accessed
 
 Four CSV data sets with minute-level activity counts data are attached
 to the `arctools` package. The data file names are stored in
-`extdata_fnames`.
+`extdata_fnames` object that becomes available once the `arctools`
+package is loaded.
 
 ``` r
 library(arctools)
@@ -105,6 +106,7 @@ The data columns are:
 
 ``` r
 ## Plot activity counts
+## Format timestamp data column from character to POSIXct object
 ggplot(dat, aes(x = ymd_hms(timestamp), y = vectormagnitude)) + 
   geom_line(size = 0.3, alpha = 0.8) + 
   labs(x = "Time", y = "Activity counts") + 
@@ -353,15 +355,22 @@ mean\_nonactive\_bout
 
 ### Output explained
 
-To explain `activity_stats` method output, we define activity count,
-active/non-active minute, and active/non-active bout.
+To explain `activity_stats` method output, we first define the terms
+*activity count*, *active/non-active minute*, *active/non-active bout*,
+and *valid day*.
 
-  - Activity count (AC) - a munute-level metric of PA volume
-  - Active minute - AC labeled as active (non-sedentary). For Wrist-worn
-    Actigraph we use AC\>=1853 (defaut threshold).
-  - Active bout - sequence of \>=1 consecutive active minute(s).
-  - Valid day - a day with less than 10% of the non-wear time (see
-    `?get_wear_flag` for wear/non-wear time detection details).
+  - Activity count (AC) - a minute-level metric of PA volume.
+  - Active minute - a minute with AC equal or above a fixed threshold;
+    for wrist-worn Actigraph  
+    we use AC\>=1853 (method’s default).
+  - Non-active (sedentary) minute - a minute with AC below a fixed
+    threshold; for wrist-worn Actigraph  
+    we use AC\<1853 (method’s default).
+  - Active bout - a sequence of 1 or more consecutive active minute(s).
+  - Non-active bout - a sequence of 1 or more consecutive non-active
+    minute(s).
+  - Valid day - a day with no more than 10% of the non-wear time (see
+    *Details* in `?activity_stats`).
 
 Meta information:
 
@@ -1269,11 +1278,11 @@ which activity summaries are to be computed; it takes values between 1
 (Sunday) to 7 (Saturday). Default is `NULL` (all days of a week are
 used).
 
-Here, we summarize PA within weekday days only. **Note the `n_days` and
-`n_valid_days` columns summarize the days which match the days of a week
-subset condition only**; for example, below, `n_days` number of unique
-day dates in data is 6 despite the range of data collection without
-subsetting ranges 8 days.
+Here, we summarize PA within weekday days only. **Note that in the
+method output, the** `n_days` **and** `n_valid_days` **columns only
+count the days from the selected week days subset**; for example, below,
+`n_days` number of unique day dates in data is 6 despite the range of
+data collection without subsetting ranges 8 days.
 
 ``` r
 # day of a week indices 2,3,4,5,6 correspond to Mon,Tue,Wed,Thu,Fri 
@@ -1749,10 +1758,10 @@ mean\_nonactive\_bout\_6to12only\_weekdays17only
 
 ### Summarizing PA with a fixed set of minutes excluded
 
-The `exclude_minutes` argument allows to specify subset of a day’s
+The `exclude_minutes` argument allows specifying a subset of a day’s
 minutes excluded for computing activity summaries.
 
-Here, we summarize PA while excluding observatins between 11:00 PM and
+Here, we summarize PA while excluding observations between 11:00 PM and
 5:00 AM.
 
 ``` r
@@ -2002,14 +2011,13 @@ software.
 ##### ActiLife-estimated in-bed data
 
 The ActiLife-estimated in-bed data file is attached to the `arctools`
-package. The sleep data columns relevant are,
+package. The sleep data columns include:
 
   - `Subject Name` - subject IDs coressponding to AC data, stored in
     `extdata_fnames`,
-      - `In Bed Time` - ActiLife-estimated start of in-bed interval for
-        each day of the measurement,
-      - `Out Bed Time` - ActiLife-estimated end of in-bed interval.
-        </br>
+  - `In Bed Time` - ActiLife-estimated start of in-bed interval for each
+    day of the measurement,
+  - `Out Bed Time` - ActiLife-estimated end of in-bed interval.
 
 <!-- end list -->
 
@@ -2019,29 +2027,24 @@ SleepDetails_fname <- "BatchSleepExportDetails_2020-05-01_14-00-46.csv"
 SleepDetails_fpath <- system.file("extdata", SleepDetails_fname, package = "arctools")
 SleepDetails       <- as.data.frame(fread(SleepDetails_fpath))
 
-## Filter sleep details data to keep data correcponding to current counts data file
+## Filter sleep details data to keep ID1 file 
 SleepDetails_sub <-
     SleepDetails %>%
     filter(`Subject Name` == "ID_1") %>%
-    mutate(`In Bed Time`  = mdy_hms(`In Bed Time`),
-           `Out Bed Time` = mdy_hms(`Out Bed Time`)) %>%
     select(`Subject Name`, `In Bed Time`, `Out Bed Time`) 
-SleepDetails_sub
-#>   Subject Name         In Bed Time        Out Bed Time
-#> 1         ID_1 2018-07-13 21:18:00 2018-07-14 04:50:00
-#> 2         ID_1 2018-07-14 22:41:00 2018-07-15 05:40:00
-#> 3         ID_1 2018-07-16 19:46:00 2018-07-17 04:32:00
-#> 4         ID_1 2018-07-17 23:30:00 2018-07-18 06:32:00
-#> 5         ID_1 2018-07-18 22:16:00 2018-07-19 07:17:00
-#> 6         ID_1 2018-07-19 22:30:00 2018-07-20 06:40:00
+str(SleepDetails_sub)
+#> 'data.frame':    6 obs. of  3 variables:
+#>  $ Subject Name: chr  "ID_1" "ID_1" "ID_1" "ID_1" ...
+#>  $ In Bed Time : chr  "7/13/2018 9:18:00 PM" "7/14/2018 10:41:00 PM" "7/16/2018 7:46:00 PM" "7/17/2018 11:30:00 PM" ...
+#>  $ Out Bed Time: chr  "7/14/2018 4:50:00 AM" "7/15/2018 5:40:00 AM" "7/17/2018 4:32:00 AM" "7/18/2018 6:32:00 AM" ...
 ```
 
-Finally, we use in/out-bed time `POSIXct` vectors in `activity_stats`
-method.
+We transform dates stored as character into `POSIXct` object, and then
+use in/out-bed dates vectors in `activity_stats` method.
 
 ``` r
-in_bed_time  <- SleepDetails_sub[, "In Bed Time"]
-out_bed_time <- SleepDetails_sub[, "Out Bed Time"]
+in_bed_time  <- mdy_hms(SleepDetails_sub[, "In Bed Time"])
+out_bed_time <- mdy_hms(SleepDetails_sub[, "Out Bed Time"])
 
 activity_stats(acc, acc_ts, in_bed_time = in_bed_time, out_bed_time = out_bed_time) 
 ```
@@ -2072,19 +2075,19 @@ wear\_time\_on\_valid\_days
 
 <th style="text-align:right;">
 
-tac\_23to5removed
+tac\_inbedremoved
 
 </th>
 
 <th style="text-align:right;">
 
-tlac\_23to5removed
+tlac\_inbedremoved
 
 </th>
 
 <th style="text-align:right;">
 
-ltac\_23to5removed
+ltac\_inbedremoved
 
 </th>
 
@@ -2116,87 +2119,19 @@ ltac\_23to5removed
 
 <td style="text-align:right;">
 
-2735749
+2746582
 
 </td>
 
 <td style="text-align:right;">
 
-6052.84
+6062.753
 
 </td>
 
 <td style="text-align:right;">
 
-14.82192
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:right;">
-
-astp\_23to5removed
-
-</th>
-
-<th style="text-align:right;">
-
-satp\_23to5removed
-
-</th>
-
-<th style="text-align:right;">
-
-time\_spent\_active\_23to5removed
-
-</th>
-
-<th style="text-align:right;">
-
-time\_spent\_nonactive\_23to5removed
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:right;">
-
-0.1702018
-
-</td>
-
-<td style="text-align:right;">
-
-0.1395057
-
-</td>
-
-<td style="text-align:right;">
-
-483.25
-
-</td>
-
-<td style="text-align:right;">
-
-596.75
+14.82587
 
 </td>
 
@@ -2214,25 +2149,25 @@ time\_spent\_nonactive\_23to5removed
 
 <th style="text-align:right;">
 
-no\_of\_active\_bouts\_23to5removed
+astp\_inbedremoved
 
 </th>
 
 <th style="text-align:right;">
 
-no\_of\_nonactive\_bouts\_23to5removed
+satp\_inbedremoved
 
 </th>
 
 <th style="text-align:right;">
 
-mean\_active\_bout\_23to5removed
+time\_spent\_active\_inbedremoved
 
 </th>
 
 <th style="text-align:right;">
 
-mean\_nonactive\_bout\_23to5removed
+time\_spent\_nonactive\_inbedremoved
 
 </th>
 
@@ -2246,25 +2181,93 @@ mean\_nonactive\_bout\_23to5removed
 
 <td style="text-align:right;">
 
-82.25
+0.1703551
 
 </td>
 
 <td style="text-align:right;">
 
-83.25
+0.1580934
 
 </td>
 
 <td style="text-align:right;">
 
-5.87538
+485.75
 
 </td>
 
 <td style="text-align:right;">
 
-7.168168
+529.75
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:right;">
+
+no\_of\_active\_bouts\_inbedremoved
+
+</th>
+
+<th style="text-align:right;">
+
+no\_of\_nonactive\_bouts\_inbedremoved
+
+</th>
+
+<th style="text-align:right;">
+
+mean\_active\_bout\_inbedremoved
+
+</th>
+
+<th style="text-align:right;">
+
+mean\_nonactive\_bout\_inbedremoved
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:right;">
+
+82.75
+
+</td>
+
+<td style="text-align:right;">
+
+83.75
+
+</td>
+
+<td style="text-align:right;">
+
+5.870091
+
+</td>
+
+<td style="text-align:right;">
+
+6.325373
 
 </td>
 
@@ -2282,8 +2285,8 @@ produce `activity_stats` results step by step with these functions.
 
 We reuse the objects:
 
-  - `acc` - numeric vector; minute-level activity counts data,
-  - `acc_ts` - POSIXct vector; minute-level time of `acc` data
+  - `acc` - a numeric vector; minute-level activity counts data,
+  - `acc_ts` - a `POSIXct` vector; minute-level time of `acc` data
     collection.
 
 <!-- end list -->
@@ -2325,11 +2328,12 @@ c(length(acc[!is.na(acc)]), length(acc))
 
 Function `get_wear_flag` computes wear/non-wear flag (`1/0`) for each
 minute of activity counts data. Method implements wear/non-wear
-detection algorithm proposed by Choi et al. (2011).
+detection algorithm closely following that of Choi et al. (2011). See
+`?get_wear_flag` for more details and function arguments.
 
   - The returned vector has value `1` for wear and `0` for non-wear
     flagged minute.
-  - If there is an `NA` entry in a data imput vector, then the returned
+  - If there is an `NA` entry in a data input vector, then the returned
     vector will have a corresponding entry set to `NA` too.
 
 <!-- end list -->
@@ -2346,7 +2350,8 @@ round(apply(wear_flag_mat, 1, sum, na.rm = TRUE) / 1440, 3)
 ### Get valid/non-valid day flag with `get_valid_day_flag`
 
 Function `get_valid_day_flag` computes valid/non-valid day flag (`1/0`)
-for each minute of activity counts data.
+for each minute of activity counts data. See `?get_valid_day_flag` for
+more details and function arguments.
 
 Here, 4 out of 8 days have more that 10% (144 minutes) of missing data.
 
@@ -2362,22 +2367,9 @@ apply(valid_day_flag_mat, 1, mean, na.rm = TRUE)
 ### Impute missing data with `impute_missing_data`
 
 Function `impute_missing_data` imputes missing data in valid days based
-on the “average day profile”.
-
-  - An “average day profile” is computed as a minute-wise average of
-    wear-time AC across valid days.
-
-  - AC data are imputed from “average day profile” for minutes
-    identified as non-wear in days identified as valid.
-
-Here, all four valid days have 100% of wear time (recall result of
-proportion of wear time across all days:
-`0.583 1.000 0.874 0.679 1.000 1.000 1.000 0.338`). We hence demonstrate
-the `impute_missing_data` method by artificially replacing 1h (4%) of a
-valid day with non-wear.
-
-JU: I vave no idea what the last paragraph means. I would remove it
-completely.
+on the “average day profile”, a minute-wise average of wear-time AC
+across valid days. See `?get_valid_day_flag` for more details and
+function arguments.
 
 ``` r
 ## Copies of original objects for the purpose of demonstration
@@ -2400,19 +2392,9 @@ c(mean(acc_cpy[which(valid_day_flag == 1)]),
 
 ### Create PA characteristics with `summarize_PA`
 
-Finally, method `summarize_PA` computes physical all PA characteristics.
-
-  - Same as `activity_stats`, it returns a data frame with physical
-    activity summaries.
-  - Same as `activity_stats`, it accepts arguments to compute physical
-    activity summaries
-      - within a fixed subset of minutes (arg. `subset_minutes`),
-      - excluding a fixed subset of minutes (arg. `exclude_minutes`),
-      - excluding day-specific in-bed intervals (args `in_bed_time`,
-        `out_bed_time`). See `?summarize_PA` for more details.
-
-Here, we summarize PA with the default parameters, across all valid
-days.
+Finally, method `summarize_PA` computes PA summaries. Similarly as
+`activity_stats`, it accepts arguments to subset/exclude minutes. See
+`?activity_stats` for more details and function arguments.
 
 ``` r
 summarize_PA(acc, acc_ts, wear_flag, valid_day_flag) 
