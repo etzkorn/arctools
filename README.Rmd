@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.com/martakarass/arctools.svg?branch=master)](https://travis-ci.com/martakarass/arctools)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/martakarass/arctools?branch=master&svg=true)](https://ci.appveyor.com/project/martakarass/arctools)
 <!-- badges: end -->
 
 The `arctools` package allows to generate summaries of the minute-level physical activity (PA) data. The default parameters are chosen for the Actigraph activity counts collected with a wrist-worn device; however, the package can be used for other minute-level PA data with the corresponding timepstamps vector.

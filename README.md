@@ -39,6 +39,8 @@ arctools
 
 [![Travis build
 status](https://travis-ci.com/martakarass/arctools.svg?branch=master)](https://travis-ci.com/martakarass/arctools)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/martakarass/arctools?branch=master&svg=true)](https://ci.appveyor.com/project/martakarass/arctools)
 <!-- badges: end -->
 
 The `arctools` package allows to generate summaries of the minute-level
