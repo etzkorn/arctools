@@ -20,3 +20,9 @@ matrix:
   allow_failures:
     - r: devel
     - r: oldrel
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'covr::codecov(type = "all")'

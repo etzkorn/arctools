@@ -21,7 +21,8 @@ Suggests:
     dplyr,
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    covr
 Imports: 
     lubridate,
     runstats

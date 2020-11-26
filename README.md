@@ -41,6 +41,8 @@ arctools
 status](https://travis-ci.com/martakarass/arctools.svg?branch=master)](https://travis-ci.com/martakarass/arctools)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/martakarass/arctools?branch=master&svg=true)](https://ci.appveyor.com/project/martakarass/arctools)
+[![Codecov test
+coverage](https://codecov.io/gh/martakarass/arctools/branch/master/graph/badge.svg)](https://codecov.io/gh/martakarass/arctools?branch=master)
 <!-- badges: end -->
 
 The `arctools` package allows to generate summaries of the minute-level
