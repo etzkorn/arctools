@@ -20,7 +20,7 @@ To learn more about arctools, start with the vignettes:
 Authors:
 \itemize{
   \item Jacek Urbanek (\href{https://orcid.org/0000-0002-1890-8899}{ORCID})
-  \item Jennifer Schrack
+  \item Jennifer Schrack (\href{https://orcid.org/0000-0001-9244-9267}{ORCID})
 }
 
 }

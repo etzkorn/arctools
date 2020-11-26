@@ -1,13 +1,14 @@
 Package: arctools
 Type: Package
 Title: Processing and Physical Activity Summaries of Minute Level Activity Data
-Version: 0.1.1
+Version: 1.0.0
 Authors@R: c(
   person("Marta", "Karas", email = "marta.karass@gmail.com", role = c("aut", "cre"), 
       comment = c(ORCID = "0000-0001-5889-3970")),
   person("Jacek", "Urbanek", role = c("aut"), 
       comment = c(ORCID = "0000-0002-1890-8899")),
-  person("Jennifer", "Schrack", role = c("aut"))
+  person("Jennifer", "Schrack", role = c("aut"), 
+      comment = c(ORCID = "0000-0001-9244-9267"))
   )
 Description: Provides functions to process minute level actigraphy-measured activity counts data and extract commonly used physical activity volume and fragmentation metrics.
 License: GPL-3
