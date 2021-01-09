@@ -9,7 +9,7 @@
 #' 1st observation
 #' corresponds to minute of 00:00-00:01 on the first day of data collection,
 #' and last observation
-#' corresponds to minute of 23:50-00:00 on the last day of data collection.
+#' corresponds to minute of 23:59-00:00 on the last day of data collection.
 #' Entries corresponding to no data in original activity data vector
 #' are filled with \code{NA}.
 #'
@@ -38,6 +38,11 @@ midnight_to_midnight <- function(acc, acc_ts){
 
   ## Argument check
   arg_check_acc_ts(acc_ts)
+
+  ## Added 2021-01-06 as protective measure in case one fails to submit
+  ## acc_ts as lubridate::ymd_hms()-generated is.POSIXct
+  ## (note: base::as.POSIXct()-generated IS NOT OK!)
+  acc_ts <- lubridate::ymd_hms(acc_ts)
 
   ## Define day-specific minute for each observation
   obs_df <- data.frame(acc = acc, acc_ts = acc_ts, stringsAsFactors = FALSE)
