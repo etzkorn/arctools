@@ -25,7 +25,7 @@ In the returned vector,
 1st observation
 corresponds to minute of 00:00-00:01 on the first day of data collection,
 and last observation
-corresponds to minute of 23:50-00:00 on the last day of data collection.
+corresponds to minute of 23:59-00:00 on the last day of data collection.
 Entries corresponding to no data in original activity data vector
 are filled with \code{NA}.
 }
