@@ -45,8 +45,8 @@ status](https://ci.appveyor.com/api/projects/status/github/martakarass/arctools?
 coverage](https://codecov.io/gh/martakarass/arctools/branch/master/graph/badge.svg)](https://codecov.io/gh/martakarass/arctools?branch=master)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/arctools)](https://CRAN.R-project.org/package=arctools)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/arctools?color=blue)](https://cran.r-project.org/package=arctools)
-[![](http://cranlogs.r-pkg.org/badges/last-month/arctools?color=blue)](https://cran.r-project.org/package=arctools)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/arctools)](https://cran.r-project.org/package=arctools)
+[![](https://cranlogs.r-pkg.org/badges/last-month/arctools)](https://cran.r-project.org/package=arctools)
 <!-- badges: end -->
 
 The `arctools` package allows to generate summaries of the minute-level
