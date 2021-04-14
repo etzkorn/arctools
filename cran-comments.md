@@ -1,7 +1,7 @@
 Summary of the new changes: 
 
-* Added a `NEWS.md` file to track changes to the package.
-* Added a protective step in `midnight_to_midnight` to protect from errors coming from providing a function with `base::as.POSIXct()`-generated timestamp (not ok) instead of `lubridate::ymd_hms()`-generated timestamp. 
+* Replace Travis and AppVeyor with GitHub Actions. 
+* Added notes to the documentation about using  `lubridate::ymd_hms()`. 
 
 ## Test environments
 * local R installation, R 4.0.3

@@ -1,3 +1,8 @@
+# arctools 1.1.2
+
+* Replace Travis and AppVeyor with GitHub Actions. 
+* Added notes to the documentation about using  `lubridate::ymd_hms()`. 
+
 # arctools 1.1.0
 
 * Added a `NEWS.md` file to track changes to the package.
