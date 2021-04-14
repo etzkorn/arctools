@@ -10,7 +10,7 @@ midnight_to_midnight(acc, acc_ts)
 \item{acc}{A numeric vector. A minute-level activity counts data vector.}
 
 \item{acc_ts}{A POSIXct vector. Time of activity data collection, corresponding to
-\code{acc}.}
+\code{acc}. We strongly recommended to use \code{lubridate::ymd_hms()} function to create \code{acc_ts} (see Examples below).}
 }
 \value{
 A numeric vector. A minute-level activity counts data vector in

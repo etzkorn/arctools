@@ -20,7 +20,8 @@
 #'
 #' @param acc A numeric vector. A minute-level activity counts data vector.
 #' @param acc_ts A POSIXct vector. A minute-level time of \code{acc}
-#' data collection.
+#' data collection. We strongly recommended to use \code{lubridate::ymd_hms()}
+#' function to create \code{acc_ts} (see Examples below).
 #' @param impute_missing A logical scalar. Whether or not to perform missing
 #' data imputation (see Details). Default is \code{TRUE}.
 #' @param sedentary_thresh A numeric scalar. If an activity count value falls

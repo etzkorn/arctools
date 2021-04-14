@@ -27,7 +27,9 @@ is a multiple of number of minutes in a full day
 (1440). See \code{arctools::midnight_to_midnight()}.}
 
 \item{acc_ts}{A POSIXct vector. Time of activity data collection, corresponding to
-\code{acc} in its original format (not: midnight-to-midnight).}
+\code{acc} in its original format (not: midnight-to-midnight).
+We strongly recommended to use \code{lubridate::ymd_hms()} function to
+create \code{acc_ts} (see Examples below).}
 
 \item{wear_flag}{An integer vector. It has value \code{1} if a minute
 belongs to a wear time-interval, value \code{0} if a minute

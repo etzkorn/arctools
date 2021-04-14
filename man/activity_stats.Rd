@@ -24,7 +24,8 @@ activity_stats(
 \item{acc}{A numeric vector. A minute-level activity counts data vector.}
 
 \item{acc_ts}{A POSIXct vector. A minute-level time of \code{acc}
-data collection.}
+data collection. We strongly recommended to use \code{lubridate::ymd_hms()}
+function to create \code{acc_ts} (see Examples below).}
 
 \item{impute_missing}{A logical scalar. Whether or not to perform missing
 data imputation (see Details). Default is \code{TRUE}.}

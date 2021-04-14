@@ -15,7 +15,7 @@
 #'
 #' @param acc A numeric vector. A minute-level activity counts data vector.
 #' @param acc_ts A POSIXct vector. Time of activity data collection, corresponding to
-#' \code{acc}.
+#' \code{acc}. We strongly recommended to use \code{lubridate::ymd_hms()} function to create \code{acc_ts} (see Examples below).
 #'
 #' @return A numeric vector. A minute-level activity counts data vector in
 #' midnight-to-midnight format.

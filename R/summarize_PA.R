@@ -32,6 +32,8 @@ return_out_NAfilled <- function(N_days, N_valid_days, out_names_suffix, adjust_o
 #' (1440). See \code{arctools::midnight_to_midnight()}.
 #' @param acc_ts A POSIXct vector. Time of activity data collection, corresponding to
 #' \code{acc} in its original format (not: midnight-to-midnight).
+#' We strongly recommended to use \code{lubridate::ymd_hms()} function to
+#' create \code{acc_ts} (see Examples below).
 #' @param wear_flag An integer vector. It has value \code{1} if a minute
 #' belongs to a wear time-interval, value \code{0} if a minute
 #' belongs to a non-wear time-interval, and value \code{NA} to denote minutes
