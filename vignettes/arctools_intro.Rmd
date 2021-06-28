@@ -27,9 +27,13 @@ Below, we demonstrate the use of `arctools` with the attached, exemplary minute-
 
 # Using `arctools` package to compute physical activity summaries
 
+The `arctools` functions process one file with accelerometry data at a time. 
+
 ### Reading PA data
 
 Four CSV data sets with minute-level activity counts data are attached to the `arctools` package. The data file names are stored in `extdata_fnames` object that becomes available once the `arctools` package is loaded.
+
+Below, we defined `fpath` to be a path to one of the minute-level activity counts data files. `fread()` reads minute-level activity counts data file while conveniently skipping first few rows with meta data, and then `as.data.frame()` converts the read data into a data frame object. The read-in data is assigned to `dat` variable. `head()` and `tail()` get first few and last few rows of `dat`, respectively. 
 
 ```{r}
 library(arctools)

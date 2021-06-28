@@ -1,6 +1,6 @@
 # arctools 1.1.3
 
-* Minor changes in DESCRIPRION file.
+* Minor changes in vignette. 
 
 # arctools 1.1.2
 
