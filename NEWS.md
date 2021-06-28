@@ -1,3 +1,7 @@
+# arctools 1.1.3
+
+* Minor changes in DESCRIPRION file.
+
 # arctools 1.1.2
 
 * Replace Travis and AppVeyor with GitHub Actions. 
