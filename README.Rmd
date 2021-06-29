@@ -45,7 +45,7 @@ devtools::install_github("martakarass/arctools")
 
 ## Documentation 
 
-A PDF with detailed documentation of all methods can be accessed [here](https://www.dropbox.com/s/cfnud6zxntub7a7/arctools_0.1.1.pdf?dl=1). 
+A PDF with detailed documentation of all methods can be accessed [here](https://cran.r-project.org/web/packages/arctools/arctools.pdf). 
 
 # Using `arctools` package to compute physical activity summaries
 

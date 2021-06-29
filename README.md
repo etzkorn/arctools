@@ -1,40 +1,39 @@
 arctools
 ================
 
-  - [Installation](#installation)
-  - [Documentation](#documentation)
-  - [Using `arctools` package to compute physical activity
+-   [Installation](#installation)
+-   [Documentation](#documentation)
+-   [Using `arctools` package to compute physical activity
     summaries](#using-arctools-package-to-compute-physical-activity-summaries)
-      - [Reading PA data](#reading-pa-data)
-      - [Computing summaries with `activity_stats`
+    -   [Reading PA data](#reading-pa-data)
+    -   [Computing summaries with `activity_stats`
         method](#computing-summaries-with-activity_stats-method)
-      - [Output explained](#output-explained)
-  - [Additional`activity_stats` method
+    -   [Output explained](#output-explained)
+-   [Additional`activity_stats` method
     options](#additionalactivity_stats-method-options)
-      - [Summarizing PA within a fixed set of minutes
+    -   [Summarizing PA within a fixed set of minutes
         only](#summarizing-pa-within-a-fixed-set-of-minutes-only)
-      - [Summarizing PA within a subset of weekdays
+    -   [Summarizing PA within a subset of weekdays
         only](#summarizing-pa-within-a-subset-of-weekdays-only)
-      - [Summarizing PA with a fixed set of minutes
+    -   [Summarizing PA with a fixed set of minutes
         excluded](#summarizing-pa-with-a-fixed-set-of-minutes-excluded)
-      - [Summarizing PA with in-bed time
+    -   [Summarizing PA with in-bed time
         excluded](#summarizing-pa-with-in-bed-time-excluded)
-  - [Components of `activity_stats`
+-   [Components of `activity_stats`
     method](#components-of-activity_stats-method)
-      - [Expand the length of minute-level AC vector to full 24-hour
+    -   [Expand the length of minute-level AC vector to full 24-hour
         periods with
         `midnight_to_midnight`](#expand-the-length-of-minute-level-ac-vector-to-full-24-hour-periods-with-midnight_to_midnight)
-      - [Get wear/non-wear flag with
+    -   [Get wear/non-wear flag with
         `get_wear_flag`](#get-wearnon-wear-flag-with-get_wear_flag)
-      - [Get valid/non-valid day flag with
+    -   [Get valid/non-valid day flag with
         `get_valid_day_flag`](#get-validnon-valid-day-flag-with-get_valid_day_flag)
-      - [Impute missing data with
+    -   [Impute missing data with
         `impute_missing_data`](#impute-missing-data-with-impute_missing_data)
-      - [Create PA characteristics with
+    -   [Create PA characteristics with
         `summarize_PA`](#create-pa-characteristics-with-summarize_pa)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![Codecov test
@@ -69,7 +68,7 @@ devtools::install_github("martakarass/arctools")
 ## Documentation
 
 A PDF with detailed documentation of all methods can be accessed
-[here](https://www.dropbox.com/s/cfnud6zxntub7a7/arctools_0.1.1.pdf?dl=1).
+[here](https://cran.r-project.org/web/packages/arctools/arctools.pdf).
 
 # Using `arctools` package to compute physical activity summaries
 
@@ -102,14 +101,12 @@ rbind(head(dat, 3), tail(dat, 3))
 
 The data columns are:
 
-  - `Axis1` - sensor’s X axis minute-level counts data,
-  - `Axis2` - sensor’s Y axis minute-level counts data,
-  - `Axis3` - sensor’s Z axis minute-level counts data,
-  - `vectormagnitude` - minute-level counts data defined as
+-   `Axis1` - sensor’s X axis minute-level counts data,
+-   `Axis2` - sensor’s Y axis minute-level counts data,
+-   `Axis3` - sensor’s Z axis minute-level counts data,
+-   `vectormagnitude` - minute-level counts data defined as
     `sqrt(Axis1^2 + Axis2^2 + Axis3^2)`,
-  - `timestamp` - time-stamps corresponding to minute-level measures.
-
-<!-- end list -->
+-   `timestamp` - time-stamps corresponding to minute-level measures.
 
 ``` r
 ## Plot activity counts
@@ -144,53 +141,53 @@ To explain `activity_stats` method output, we first define the terms
 *activity count*, *active/non-active minute*, *active/non-active bout*,
 and *valid day*.
 
-  - Activity count (AC) - a minute-level metric of PA volume.
-  - Active minute - a minute with AC equal or above a fixed threshold;
+-   Activity count (AC) - a minute-level metric of PA volume.
+-   Active minute - a minute with AC equal or above a fixed threshold;
     for wrist-worn Actigraph  
-    we use AC\>=1853 (method’s default).
-  - Non-active (sedentary) minute - a minute with AC below a fixed
+    we use AC&gt;=1853 (method’s default).
+-   Non-active (sedentary) minute - a minute with AC below a fixed
     threshold; for wrist-worn Actigraph  
-    we use AC\<1853 (method’s default).
-  - Active bout - a sequence of 1 or more consecutive active minute(s).
-  - Non-active bout - a sequence of 1 or more consecutive non-active
+    we use AC&lt;1853 (method’s default).
+-   Active bout - a sequence of 1 or more consecutive active minute(s).
+-   Non-active bout - a sequence of 1 or more consecutive non-active
     minute(s).
-  - Valid day - a day with no more than 10% of the non-wear time (see
+-   Valid day - a day with no more than 10% of the non-wear time (see
     *Details* in `?activity_stats`).
 
 Meta information:
 
-  - `n_days` - number of days (unique day dates) of data collection.
-  - `n_valid_days` - number of days (unique day dates) of data
+-   `n_days` - number of days (unique day dates) of data collection.
+-   `n_valid_days` - number of days (unique day dates) of data
     collection determined as valid days.
-  - `wear_time_on_valid_days` - average number of wear-time minutes
+-   `wear_time_on_valid_days` - average number of wear-time minutes
     across valid days.
 
 Summaries of PA volumes metrics:
 
-  - `tac` - TAC, Total activity counts per day - sum of AC measured on
+-   `tac` - TAC, Total activity counts per day - sum of AC measured on
     valid days divided by the number of valid days.
-  - `tlac` - TLAC, Total-log activity counts per day - sum of log(1+AC)
+-   `tlac` - TLAC, Total-log activity counts per day - sum of log(1+AC)
     measured on valid days divided by the number of valid days. Here
     ‘log’ denotes the natural logarithm.
-  - `ltac` - LTAC, Log-total activity counts - natural logarithm of TAC.
-  - `time_spent_active` - Average number of active minutes per valid
+-   `ltac` - LTAC, Log-total activity counts - natural logarithm of TAC.
+-   `time_spent_active` - Average number of active minutes per valid
     day.
-  - `time_spent_nonactive` - Average number of sedentary minutes per
+-   `time_spent_nonactive` - Average number of sedentary minutes per
     valid day.
 
 Summaries of PA fragmentation metrics:
 
-  - `astp` - ASTP, active to sedentary transition probability on valid
+-   `astp` - ASTP, active to sedentary transition probability on valid
     days.
-  - `satp` - SATP, sedentary to active transition probability on valid
+-   `satp` - SATP, sedentary to active transition probability on valid
     days.
-  - `no_of_active_bouts` - Average number of active minutes per valid
+-   `no_of_active_bouts` - Average number of active minutes per valid
     day.
-  - `no_of_nonactive_bouts` - Average number of sedentary minutes per
+-   `no_of_nonactive_bouts` - Average number of sedentary minutes per
     valid day.
-  - `mean_active_bout` - Average duration (in minutes) of an active bout
+-   `mean_active_bout` - Average duration (in minutes) of an active bout
     on valid days.
-  - `mean_nonactive_bout` - Average duration (in minutes) of a sedentary
+-   `mean_nonactive_bout` - Average duration (in minutes) of a sedentary
     bout on valid days.
 
 # Additional`activity_stats` method options
@@ -356,13 +353,11 @@ software.
 The ActiLife-estimated in-bed data file is attached to the `arctools`
 package. The sleep data columns include:
 
-  - `Subject Name` - subject IDs corresponding to AC data, stored in
+-   `Subject Name` - subject IDs corresponding to AC data, stored in
     `extdata_fnames`,
-  - `In Bed Time` - ActiLife-estimated start of in-bed interval for each
+-   `In Bed Time` - ActiLife-estimated start of in-bed interval for each
     day of the measurement,
-  - `Out Bed Time` - ActiLife-estimated end of in-bed interval.
-
-<!-- end list -->
+-   `Out Bed Time` - ActiLife-estimated end of in-bed interval.
 
 ``` r
 ## Read sleep details data file
@@ -410,11 +405,9 @@ produce `activity_stats` results step by step with these functions.
 
 We reuse the objects:
 
-  - `acc` - a numeric vector; minute-level activity counts data,
-  - `acc_ts` - a `POSIXct` vector; minute-level time of `acc` data
+-   `acc` - a numeric vector; minute-level activity counts data,
+-   `acc_ts` - a `POSIXct` vector; minute-level time of `acc` data
     collection.
-
-<!-- end list -->
 
 ``` r
 df <- data.frame(acc = acc, acc_ts = acc_ts)
@@ -430,15 +423,15 @@ rbind(head(df, 3), tail(df, 3))
 
 ### Expand the length of minute-level AC vector to full 24-hour periods with `midnight_to_midnight`
 
-  - In the returned vector, the first observation corresponds to the
+-   In the returned vector, the first observation corresponds to the
     minute of `00:00-00:01` on the first day of data collection, and the
     last observation corresponds to the minute of `23:50-00:00` on the
     last day of data collection.
-  - Entries corresponding to non-measured minutes are filled with `NA`.
+-   Entries corresponding to non-measured minutes are filled with `NA`.
 
 Here, collected data cover total of `7*24*1440 = 10080` minutes (from
-`2018-07-13 10:00:00` to `2018-07-20 09:59:00`), but spans `8*24*1440
-= 11520` minutes of full midnight-to-midnight days (from
+`2018-07-13 10:00:00` to `2018-07-20 09:59:00`), but spans
+`8*24*1440 = 11520` minutes of full midnight-to-midnight days (from
 `2018-07-13 00:00:00` to `2018-07-20 23:59:00`).
 
 ``` r
@@ -456,12 +449,10 @@ minute of activity counts data. Method implements wear/non-wear
 detection algorithm closely following that of Choi et al. (2011). See
 `?get_wear_flag` for more details and function arguments.
 
-  - The returned vector has value `1` for wear and `0` for non-wear
+-   The returned vector has value `1` for wear and `0` for non-wear
     flagged minute.
-  - If there is an `NA` entry in a data input vector, then the returned
+-   If there is an `NA` entry in a data input vector, then the returned
     vector will have a corresponding entry set to `NA` too.
-
-<!-- end list -->
 
 ``` r
 wear_flag <- get_wear_flag(acc)
