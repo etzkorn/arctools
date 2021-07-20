@@ -91,13 +91,13 @@ library(ggplot2)
 fpath <- system.file("extdata", extdata_fnames[1], package = "arctools")
 dat   <- as.data.frame(fread(fpath))
 rbind(head(dat, 3), tail(dat, 3))
-      Axis1 Axis2 Axis3 vectormagnitude           timestamp
-1      1021  1353  2170            2754 2018-07-13 10:00:00
-2      1656  1190  2212            3009 2018-07-13 10:01:00
-3      2540  1461  1957            3524 2018-07-13 10:02:00
-10078     0     0     0               0 2018-07-20 09:57:00
-10079     0     0     0               0 2018-07-20 09:58:00
-10080     0     0     0               0 2018-07-20 09:59:00
+#>       Axis1 Axis2 Axis3 vectormagnitude           timestamp
+#> 1      1021  1353  2170            2754 2018-07-13 10:00:00
+#> 2      1656  1190  2212            3009 2018-07-13 10:01:00
+#> 3      2540  1461  1957            3524 2018-07-13 10:02:00
+#> 10078     0     0     0               0 2018-07-20 09:57:00
+#> 10079     0     0     0               0 2018-07-20 09:58:00
+#> 10080     0     0     0               0 2018-07-20 09:59:00
 ```
 
 The data columns are:
@@ -128,12 +128,12 @@ acc    <- dat$vectormagnitude
 acc_ts <- ymd_hms(dat$timestamp)
 
 activity_stats(acc, acc_ts)
-  n_days n_valid_days wear_time_on_valid_days     tac     tlac    ltac
-1      8            4                    1440 2826648 6429.838 14.8546
-       astp       satp time_spent_active time_spent_nonactive
-1 0.1781782 0.09516215             499.5                940.5
-  no_of_active_bouts no_of_nonactive_bouts mean_active_bout mean_nonactive_bout
-1                 89                  89.5          5.61236            10.50838
+#>   n_days n_valid_days wear_time_on_valid_days     tac     tlac    ltac
+#> 1      8            4                    1440 2826648 6429.838 14.8546
+#>        astp       satp time_spent_active time_spent_nonactive
+#> 1 0.1781782 0.09516215             499.5                940.5
+#>   no_of_active_bouts no_of_nonactive_bouts mean_active_bout mean_nonactive_bout
+#> 1                 89                  89.5          5.61236            10.50838
 ```
 
 ### Output explained
@@ -206,16 +206,16 @@ Here, we summarize PA observed between 12:00 AM and 6:00 AM.
 ``` r
 subset_12am_6am <- 1 : (6 * 1440/24)
 activity_stats(acc, acc_ts, subset_minutes = subset_12am_6am) 
-  n_days n_valid_days wear_time_on_valid_days tac_0to6only tlac_0to6only
-1      8            4                    1440      65477.5      322.1523
-  ltac_0to6only astp_0to6only satp_0to6only time_spent_active_0to6only
-1      11.08946     0.5581395    0.02004295                      10.75
-  time_spent_nonactive_0to6only no_of_active_bouts_0to6only
-1                        349.25                           6
-  no_of_nonactive_bouts_0to6only mean_active_bout_0to6only
-1                              7                  1.791667
-  mean_nonactive_bout_0to6only
-1                     49.89286
+#>   n_days n_valid_days wear_time_on_valid_days tac_0to6only tlac_0to6only
+#> 1      8            4                    1440      65477.5      322.1523
+#>   ltac_0to6only astp_0to6only satp_0to6only time_spent_active_0to6only
+#> 1      11.08946     0.5581395    0.02004295                      10.75
+#>   time_spent_nonactive_0to6only no_of_active_bouts_0to6only
+#> 1                        349.25                           6
+#>   no_of_nonactive_bouts_0to6only mean_active_bout_0to6only
+#> 1                              7                  1.791667
+#>   mean_nonactive_bout_0to6only
+#> 1                     49.89286
 ```
 
 By default, column names have a suffix added to denote that a subset of
@@ -234,26 +234,26 @@ out <- rbind(
   activity_stats(acc, acc_ts, subset_minutes = subset_6pm_12am, adjust_out_colnames = FALSE))
 rownames(out) <- c("12am-6am", "6am-12pm", "12pm-6pm", "6pm-12am")
 out
-         n_days n_valid_days wear_time_on_valid_days       tac      tlac
-12am-6am      8            4                    1440   65477.5  322.1523
-6am-12pm      8            4                    1440 1089788.5 2139.4534
-12pm-6pm      8            4                    1440  994104.8 2194.8539
-6pm-12am      8            4                    1440  677277.5 1773.3781
-             ltac      astp       satp time_spent_active time_spent_nonactive
-12am-6am 11.08946 0.5581395 0.02004295             10.75               349.25
-6am-12pm 13.90149 0.1501377 0.15406162            181.50               178.50
-12pm-6pm 13.80960 0.1751337 0.18641618            187.00               173.00
-6pm-12am 13.42584 0.2037422 0.10323253            120.25               239.75
-         no_of_active_bouts no_of_nonactive_bouts mean_active_bout
-12am-6am               6.00                  7.00         1.791667
-6am-12pm              27.25                 27.50         6.660550
-12pm-6pm              32.75                 32.25         5.709924
-6pm-12am              24.50                 24.75         4.908163
-         mean_nonactive_bout
-12am-6am           49.892857
-6am-12pm            6.490909
-12pm-6pm            5.364341
-6pm-12am            9.686869
+#>          n_days n_valid_days wear_time_on_valid_days       tac      tlac
+#> 12am-6am      8            4                    1440   65477.5  322.1523
+#> 6am-12pm      8            4                    1440 1089788.5 2139.4534
+#> 12pm-6pm      8            4                    1440  994104.8 2194.8539
+#> 6pm-12am      8            4                    1440  677277.5 1773.3781
+#>              ltac      astp       satp time_spent_active time_spent_nonactive
+#> 12am-6am 11.08946 0.5581395 0.02004295             10.75               349.25
+#> 6am-12pm 13.90149 0.1501377 0.15406162            181.50               178.50
+#> 12pm-6pm 13.80960 0.1751337 0.18641618            187.00               173.00
+#> 6pm-12am 13.42584 0.2037422 0.10323253            120.25               239.75
+#>          no_of_active_bouts no_of_nonactive_bouts mean_active_bout
+#> 12am-6am               6.00                  7.00         1.791667
+#> 6am-12pm              27.25                 27.50         6.660550
+#> 12pm-6pm              32.75                 32.25         5.709924
+#> 6pm-12am              24.50                 24.75         4.908163
+#>          mean_nonactive_bout
+#> 12am-6am           49.892857
+#> 6am-12pm            6.490909
+#> 12pm-6pm            5.364341
+#> 6pm-12am            9.686869
 ```
 
 ### Summarizing PA within a subset of weekdays only
@@ -273,18 +273,18 @@ data collection without subsetting ranges 8 days.
 # day of a week indices 2,3,4,5,6 correspond to Mon,Tue,Wed,Thu,Fri 
 subset_weekdays <- c(2:6)
 activity_stats(acc, acc_ts, subset_weekdays = subset_weekdays) 
-  n_days n_valid_days wear_time_on_valid_days tac_weekdays23456only
-1      6            3                    1440               2865711
-  tlac_weekdays23456only ltac_weekdays23456only astp_weekdays23456only
-1               6444.155               14.86833              0.1757294
-  satp_weekdays23456only time_spent_active_weekdays23456only
-1             0.09459459                            502.6667
-  time_spent_nonactive_weekdays23456only no_of_active_bouts_weekdays23456only
-1                               937.3333                             88.33333
-  no_of_nonactive_bouts_weekdays23456only mean_active_bout_weekdays23456only
-1                                88.66667                           5.690566
-  mean_nonactive_bout_weekdays23456only
-1                              10.57143
+#>   n_days n_valid_days wear_time_on_valid_days tac_weekdays23456only
+#> 1      6            3                    1440               2865711
+#>   tlac_weekdays23456only ltac_weekdays23456only astp_weekdays23456only
+#> 1               6444.155               14.86833              0.1757294
+#>   satp_weekdays23456only time_spent_active_weekdays23456only
+#> 1             0.09459459                            502.6667
+#>   time_spent_nonactive_weekdays23456only no_of_active_bouts_weekdays23456only
+#> 1                               937.3333                             88.33333
+#>   no_of_nonactive_bouts_weekdays23456only mean_active_bout_weekdays23456only
+#> 1                                88.66667                           5.690566
+#>   mean_nonactive_bout_weekdays23456only
+#> 1                              10.57143
 ```
 
 Note the `subset_weekdays` argument can be combined with other
@@ -295,24 +295,24 @@ activity summaries should be computed.
 # day of a week indices 7,1 correspond to Sat,Sun
 subset_weekdays <- c(7,1)
 activity_stats(acc, acc_ts, subset_weekdays = subset_weekdays, subset_minutes = subset_6am_12pm) 
-  n_days n_valid_days wear_time_on_valid_days tac_6to12only_weekdays17only
-1      2            1                    1440                       917368
-  tlac_6to12only_weekdays17only ltac_6to12only_weekdays17only
-1                      2071.864                      13.72926
-  astp_6to12only_weekdays17only satp_6to12only_weekdays17only
-1                     0.1840491                     0.1522843
-  time_spent_active_6to12only_weekdays17only
-1                                        163
-  time_spent_nonactive_6to12only_weekdays17only
-1                                           197
-  no_of_active_bouts_6to12only_weekdays17only
-1                                          30
-  no_of_nonactive_bouts_6to12only_weekdays17only
-1                                             30
-  mean_active_bout_6to12only_weekdays17only
-1                                  5.433333
-  mean_nonactive_bout_6to12only_weekdays17only
-1                                     6.566667
+#>   n_days n_valid_days wear_time_on_valid_days tac_6to12only_weekdays17only
+#> 1      2            1                    1440                       917368
+#>   tlac_6to12only_weekdays17only ltac_6to12only_weekdays17only
+#> 1                      2071.864                      13.72926
+#>   astp_6to12only_weekdays17only satp_6to12only_weekdays17only
+#> 1                     0.1840491                     0.1522843
+#>   time_spent_active_6to12only_weekdays17only
+#> 1                                        163
+#>   time_spent_nonactive_6to12only_weekdays17only
+#> 1                                           197
+#>   no_of_active_bouts_6to12only_weekdays17only
+#> 1                                          30
+#>   no_of_nonactive_bouts_6to12only_weekdays17only
+#> 1                                             30
+#>   mean_active_bout_6to12only_weekdays17only
+#> 1                                  5.433333
+#>   mean_nonactive_bout_6to12only_weekdays17only
+#> 1                                     6.566667
 ```
 
 ### Summarizing PA with a fixed set of minutes excluded
@@ -329,16 +329,16 @@ subset_11pm_5am <- c(
   1 : (5 * 1440/24)            ## midnight - 5:00 AM
 ) 
 activity_stats(acc, acc_ts, exclude_minutes = subset_11pm_5am) 
-  n_days n_valid_days wear_time_on_valid_days tac_23to5removed
-1      8            4                    1440          2735749
-  tlac_23to5removed ltac_23to5removed astp_23to5removed satp_23to5removed
-1           6052.84          14.82192         0.1702018         0.1395057
-  time_spent_active_23to5removed time_spent_nonactive_23to5removed
-1                         483.25                            596.75
-  no_of_active_bouts_23to5removed no_of_nonactive_bouts_23to5removed
-1                           82.25                              83.25
-  mean_active_bout_23to5removed mean_nonactive_bout_23to5removed
-1                       5.87538                         7.168168
+#>   n_days n_valid_days wear_time_on_valid_days tac_23to5removed
+#> 1      8            4                    1440          2735749
+#>   tlac_23to5removed ltac_23to5removed astp_23to5removed satp_23to5removed
+#> 1           6052.84          14.82192         0.1702018         0.1395057
+#>   time_spent_active_23to5removed time_spent_nonactive_23to5removed
+#> 1                         483.25                            596.75
+#>   no_of_active_bouts_23to5removed no_of_nonactive_bouts_23to5removed
+#> 1                           82.25                              83.25
+#>   mean_active_bout_23to5removed mean_nonactive_bout_23to5removed
+#> 1                       5.87538                         7.168168
 ```
 
 ### Summarizing PA with in-bed time excluded
@@ -372,10 +372,10 @@ SleepDetails_sub <-
     filter(`Subject Name` == "ID_1") %>%
     select(`Subject Name`, `In Bed Time`, `Out Bed Time`) 
 str(SleepDetails_sub)
-'data.frame':   6 obs. of  3 variables:
- $ Subject Name: chr  "ID_1" "ID_1" "ID_1" "ID_1" ...
- $ In Bed Time : chr  "7/13/2018 9:18:00 PM" "7/14/2018 10:41:00 PM" "7/16/2018 7:46:00 PM" "7/17/2018 11:30:00 PM" ...
- $ Out Bed Time: chr  "7/14/2018 4:50:00 AM" "7/15/2018 5:40:00 AM" "7/17/2018 4:32:00 AM" "7/18/2018 6:32:00 AM" ...
+#> 'data.frame':    6 obs. of  3 variables:
+#>  $ Subject Name: chr  "ID_1" "ID_1" "ID_1" "ID_1" ...
+#>  $ In Bed Time : chr  "7/13/2018 9:18:00 PM" "7/14/2018 10:41:00 PM" "7/16/2018 7:46:00 PM" "7/17/2018 11:30:00 PM" ...
+#>  $ Out Bed Time: chr  "7/14/2018 4:50:00 AM" "7/15/2018 5:40:00 AM" "7/17/2018 4:32:00 AM" "7/18/2018 6:32:00 AM" ...
 ```
 
 We transform dates stored as character into `POSIXct` object, and then
@@ -386,16 +386,16 @@ in_bed_time  <- mdy_hms(SleepDetails_sub[, "In Bed Time"])
 out_bed_time <- mdy_hms(SleepDetails_sub[, "Out Bed Time"])
 
 activity_stats(acc, acc_ts, in_bed_time = in_bed_time, out_bed_time = out_bed_time) 
-  n_days n_valid_days wear_time_on_valid_days tac_inbedremoved
-1      8            4                    1440          2746582
-  tlac_inbedremoved ltac_inbedremoved astp_inbedremoved satp_inbedremoved
-1          6062.753          14.82587         0.1703551         0.1580934
-  time_spent_active_inbedremoved time_spent_nonactive_inbedremoved
-1                         485.75                            529.75
-  no_of_active_bouts_inbedremoved no_of_nonactive_bouts_inbedremoved
-1                           82.75                              83.75
-  mean_active_bout_inbedremoved mean_nonactive_bout_inbedremoved
-1                      5.870091                         6.325373
+#>   n_days n_valid_days wear_time_on_valid_days tac_inbedremoved
+#> 1      8            4                    1440          2746582
+#>   tlac_inbedremoved ltac_inbedremoved astp_inbedremoved satp_inbedremoved
+#> 1          6062.753          14.82587         0.1703551         0.1580934
+#>   time_spent_active_inbedremoved time_spent_nonactive_inbedremoved
+#> 1                         485.75                            529.75
+#>   no_of_active_bouts_inbedremoved no_of_nonactive_bouts_inbedremoved
+#> 1                           82.75                              83.75
+#>   mean_active_bout_inbedremoved mean_nonactive_bout_inbedremoved
+#> 1                      5.870091                         6.325373
 ```
 
 # Components of `activity_stats` method
@@ -413,13 +413,13 @@ We reuse the objects:
 ``` r
 df <- data.frame(acc = acc, acc_ts = acc_ts)
 rbind(head(df, 3), tail(df, 3))
-       acc              acc_ts
-1     2754 2018-07-13 10:00:00
-2     3009 2018-07-13 10:01:00
-3     3524 2018-07-13 10:02:00
-10078    0 2018-07-20 09:57:00
-10079    0 2018-07-20 09:58:00
-10080    0 2018-07-20 09:59:00
+#>        acc              acc_ts
+#> 1     2754 2018-07-13 10:00:00
+#> 2     3009 2018-07-13 10:01:00
+#> 3     3524 2018-07-13 10:02:00
+#> 10078    0 2018-07-20 09:57:00
+#> 10079    0 2018-07-20 09:58:00
+#> 10080    0 2018-07-20 09:59:00
 ```
 
 ### Expand the length of minute-level AC vector to full 24-hour periods with `midnight_to_midnight`
@@ -440,7 +440,7 @@ acc <- midnight_to_midnight(acc = acc, acc_ts = acc_ts)
 
 ## Vector length on non NA-obs, vector length after acc 
 c(length(acc[!is.na(acc)]), length(acc))
-[1] 10080 11520
+#> [1] 10080 11520
 ```
 
 ### Get wear/non-wear flag with `get_wear_flag`
@@ -461,7 +461,7 @@ wear_flag <- get_wear_flag(acc)
 ## Proportion of wear time across the days
 wear_flag_mat <- matrix(wear_flag, ncol = 1440, byrow = TRUE)
 round(apply(wear_flag_mat, 1, sum, na.rm = TRUE) / 1440, 3)
-[1] 0.583 1.000 0.874 0.679 1.000 1.000 1.000 0.338
+#> [1] 0.583 1.000 0.874 0.679 1.000 1.000 1.000 0.338
 ```
 
 ### Get valid/non-valid day flag with `get_valid_day_flag`
@@ -478,7 +478,7 @@ valid_day_flag <- get_valid_day_flag(wear_flag)
 ## Compute number of valid days
 valid_day_flag_mat <- matrix(valid_day_flag, ncol = 1440, byrow = TRUE)
 apply(valid_day_flag_mat, 1, mean, na.rm = TRUE)
-[1] 0 1 0 0 1 1 1 0
+#> [1] 0 1 0 0 1 1 1 0
 ```
 
 ### Impute missing data with `impute_missing_data`
@@ -504,7 +504,7 @@ acc_cpy_imputed <- impute_missing_data(acc_cpy, wear_flag_cpy, valid_day_flag)
 ## Compare mean activity count on valid days before and after imputation
 c(mean(acc_cpy[which(valid_day_flag == 1)]), 
   mean(acc_cpy_imputed[which(valid_day_flag == 1)]))
-[1] 1955.521 1957.186
+#> [1] 1955.521 1957.186
 ```
 
 ### Create PA characteristics with `summarize_PA`
@@ -515,44 +515,44 @@ Finally, method `summarize_PA` computes PA summaries. Similarly as
 
 ``` r
 summarize_PA(acc, acc_ts, wear_flag, valid_day_flag) 
-  n_days n_valid_days wear_time_on_valid_days     tac     tlac    ltac
-1      8            4                    1440 2826648 6429.838 14.8546
-       astp       satp time_spent_active time_spent_nonactive
-1 0.1781782 0.09516215             499.5                940.5
-  no_of_active_bouts no_of_nonactive_bouts mean_active_bout mean_nonactive_bout
-1                 89                  89.5          5.61236            10.50838
+#>   n_days n_valid_days wear_time_on_valid_days     tac     tlac    ltac
+#> 1      8            4                    1440 2826648 6429.838 14.8546
+#>        astp       satp time_spent_active time_spent_nonactive
+#> 1 0.1781782 0.09516215             499.5                940.5
+#>   no_of_active_bouts no_of_nonactive_bouts mean_active_bout mean_nonactive_bout
+#> 1                 89                  89.5          5.61236            10.50838
 ```
 
 It returns the same results as the `activity_stats` function:
 
 ``` r
 activity_stats(dat$vectormagnitude, ymd_hms(dat$timestamp))
-  n_days n_valid_days wear_time_on_valid_days     tac     tlac    ltac
-1      8            4                    1440 2826648 6429.838 14.8546
-       astp       satp time_spent_active time_spent_nonactive
-1 0.1781782 0.09516215             499.5                940.5
-  no_of_active_bouts no_of_nonactive_bouts mean_active_bout mean_nonactive_bout
-1                 89                  89.5          5.61236            10.50838
+#>   n_days n_valid_days wear_time_on_valid_days     tac     tlac    ltac
+#> 1      8            4                    1440 2826648 6429.838 14.8546
+#>        astp       satp time_spent_active time_spent_nonactive
+#> 1 0.1781782 0.09516215             499.5                940.5
+#>   no_of_active_bouts no_of_nonactive_bouts mean_active_bout mean_nonactive_bout
+#> 1                 89                  89.5          5.61236            10.50838
 ```
 
 # Citation
 
 ``` r
 citation("arctools")
-
-To cite arctools in publications use:
-
-  Karas, M., Schrack, J., and Urbanek, J. (2021). arctools: Processing
-  and Physical Activity Summaries of Minute Level Activity Data. R
-  package version 1.1.4.
-
-A BibTeX entry for LaTeX users is
-
-  @Manual{,
-    title = {{arctools: Processing and Physical Activity Summaries of Minute Level Activity Data}},
-    author = {Marta Karas and Jennifer Schrack and Jacek Urbanek},
-    url = {https://CRAN.R-project.org/package=arctools},
-    note = {R package version 1.1.4},
-    year = {2021},
-  }
+#> 
+#> To cite arctools in publications use:
+#> 
+#>   Karas, M., Schrack, J., and Urbanek, J. (2021). arctools: Processing
+#>   and Physical Activity Summaries of Minute Level Activity Data. R
+#>   package version 1.1.4.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {{arctools: Processing and Physical Activity Summaries of Minute Level Activity Data}},
+#>     author = {Marta Karas and Jennifer Schrack and Jacek Urbanek},
+#>     url = {https://CRAN.R-project.org/package=arctools},
+#>     note = {R package version 1.1.4},
+#>     year = {2021},
+#>   }
 ```
