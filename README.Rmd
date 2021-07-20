@@ -12,7 +12,7 @@ always_allow_html: true
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "",
   fig.path = "man/figures/README-",
   out.width = "100%",
   echo = TRUE, 
@@ -45,7 +45,7 @@ devtools::install_github("martakarass/arctools")
 
 ## Documentation 
 
-A PDF with detailed documentation of all methods can be accessed [here](https://cran.r-project.org/web/packages/arctools/arctools.pdf). 
+A PDF with detailed documentation of all methods can be accessed [here](https://CRAN.R-project.org/package=arctools/arctools.pdf). 
 
 # Using `arctools` package to compute physical activity summaries
 
@@ -328,5 +328,10 @@ It returns the same results as the `activity_stats` function:
 activity_stats(dat$vectormagnitude, ymd_hms(dat$timestamp))
 ```
 
+# Citation 
+
+```{r}
+citation("arctools")
+```
 
 
