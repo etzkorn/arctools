@@ -1,7 +1,7 @@
 Package: arctools
 Type: Package
 Title: Processing and Physical Activity Summaries of Minute Level Activity Data
-Version: 1.1.4
+Version: 1.1.5
 Authors@R: c(
   person("Marta", "Karas", email = "marta.karass@gmail.com", role = c("aut", "cre"), 
       comment = c(ORCID = "0000-0001-5889-3970")),
@@ -14,7 +14,7 @@ Description: Provides functions to process minute level actigraphy-measured acti
 License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 2.10)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 LazyData: true
 Suggests: 
     testthat,

@@ -65,6 +65,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "Same number of valid days")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(wnw_list)){
     out1 <- ValidDays_out_list[[i]]
     out2 <- ValidDays_JU_out_list[[i]]
@@ -77,6 +78,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "Same number of values in long vector")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(wnw_list)){
     out1 <- ValidDays_out_list[[i]]
     out2 <- ValidDays_JU_out_list[[i]]
@@ -87,6 +89,7 @@ test_that(test_that_desc, {
 
 
 test_that("Test method correctly computes number of valid days: case 1", {
+  skip_on_cran()
   vec <- rep(c(0,1), times = 1440)
   valid_day_flag <- get_valid_day_flag(vec)
   valid_days_cnt <- sum(valid_day_flag) / 1440
@@ -98,6 +101,7 @@ test_that("Test method correctly computes number of valid days: case 1", {
 
 
 test_that("Test method correctly computes number of valid days: case 2", {
+  skip_on_cran()
   vec <- rep(c(0,1,1,1,1,1,1,1,1,1), times = 1440)
   valid_day_flag <- get_valid_day_flag(vec)
   valid_days_cnt <- sum(valid_day_flag) / 1440
@@ -108,6 +112,7 @@ test_that("Test method correctly computes number of valid days: case 2", {
 })
 
 test_that("Test method correctly computes number of valid days: case 3", {
+  skip_on_cran()
   vec <- rep(1, 1439)
   expect_error({
     get_valid_day_flag(vec, 144)
@@ -115,6 +120,7 @@ test_that("Test method correctly computes number of valid days: case 3", {
 })
 
 test_that("Test method correctly computes number of valid days: case 4", {
+  skip_on_cran()
   vec <- rep(1, 1439 + 1440)
   expect_error({
     get_valid_day_flag(vec, 144)
@@ -122,6 +128,7 @@ test_that("Test method correctly computes number of valid days: case 4", {
 })
 
 test_that("Test method correctly computes number of valid days: case 4", {
+  skip_on_cran()
   vec <- rep(1, 1440)
   vec[1] <- 2
   expect_error({

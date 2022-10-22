@@ -252,6 +252,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same output values")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(acc_list)){ # i <- 4
     print(i)
     out1 <- SummarizePA_JU_out_list[[i]]
@@ -264,6 +265,7 @@ test_that(test_that_desc, {
 test_that_desc <- paste0(
   "Test that the value of running the function remained unchanged.")
 test_that(test_that_desc, {
+  skip_on_cran()
   ## Pull all values from all the output lists
   out <- unlist(lapply(SummarizePA_out_list, function(val) unlist(val)))
   out <- out[!is.na(out)]
@@ -327,6 +329,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same output values")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(acc_list)){ # i <- 1
     out1 <- SummarizePA_JU_out_list[[i]]
     out2 <- SummarizePA_out_list[[i]]
@@ -338,6 +341,7 @@ test_that(test_that_desc, {
 test_that_desc <- paste0(
   "Test that the value of running the function remained unchanged.")
 test_that(test_that_desc, {
+  skip_on_cran()
   ## Pull all values from all the output lists
   out <- unlist(lapply(SummarizePA_out_list, function(val) unlist(val)))
   out <- out[!is.na(out)]
@@ -399,6 +403,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same output values")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(SummarizePA_out_list)){ # i <- 1
     out1 <- SummarizePA_JU_out_list[[i]]
     out2 <- SummarizePA_out_list[[i]]
@@ -410,6 +415,7 @@ test_that(test_that_desc, {
 test_that_desc <- paste0(
   "Test that the value of running the function remained unchanged.")
 test_that(test_that_desc, {
+  skip_on_cran()
   ## Pull all values from all the output lists
   out <- unlist(lapply(SummarizePA_out_list, function(val) unlist(val)))
   out <- out[!is.na(out)]
@@ -483,6 +489,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same output values")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(SummarizePA_out_list)){ # i <- 1
     out1 <- SummarizePA_JU_out_list[[i]]
     out2 <- SummarizePA_out_list[[i]]
@@ -494,6 +501,7 @@ test_that(test_that_desc, {
 test_that_desc <- paste0(
   "Test that the value of running the function remained unchanged.")
 test_that(test_that_desc, {
+  skip_on_cran()
   ## Pull all values from all the output lists
   out <- unlist(lapply(SummarizePA_out_list, function(val) unlist(val)))
   out <- out[!is.na(out)]
@@ -523,6 +531,7 @@ context("Testing summarize_PA() for catching misspecifications of some of the ar
 test_that_desc <- paste0(
   "Error ocurrs when include/exclude minutes arg is misspecified")
 test_that(test_that_desc, {
+  skip_on_cran()
   i <- 1
   acc            <- acc_list[[i]]
   acc_ts         <- acc_ts_list[[i]]
@@ -544,6 +553,7 @@ test_that(test_that_desc, {
 test_that_desc <- paste0(
   "Error ocurrs when include/exclude minutes arg is misspecified")
 test_that(test_that_desc, {
+  skip_on_cran()
   i <- 1
   acc            <- acc_list[[i]]
   acc_ts         <- acc_ts_list[[i]]

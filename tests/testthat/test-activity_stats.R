@@ -43,6 +43,7 @@ out_all_steps <- lapply(extdata_fnames, function(extdata_fname_i) {
 test_that_desc <- paste0(
   "Compare the wrapper out_activity_stats() gives same results as step by step procedure")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(out_activity_stats)){ # i <- 4
     out1 <- out_activity_stats[[i]]
     out2 <- out_all_steps[[i]]
@@ -63,6 +64,7 @@ acc <- round(10000 * runif(n = n))
 acc_ts <- seq(from = as.POSIXct("2020-09-21 00:00:00.00", tz = "UTC"), by = 60, length.out = n)
 
 test_that("Error ocurrs when subset_weekdays arg is misspecified", {
+  skip_on_cran()
   expect_error({
     as_out <- activity_stats(acc, acc_ts, subset_weekdays = c(0))
   })
@@ -70,6 +72,7 @@ test_that("Error ocurrs when subset_weekdays arg is misspecified", {
 
 
 test_that("The value of activity_stats remains unchanged", {
+  skip_on_cran()
 
   out_act <- unlist(activity_stats(acc, acc_ts))
   out_exp <- c(n_days = 7, n_valid_days = 7, wear_time_on_valid_days = 1440,

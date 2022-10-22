@@ -58,6 +58,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same number of NA entries")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(dat_list)){
     out1 <- MidnightToMidnight_out_list[[i]]
     out2 <- MidnightToMidnight_JU_out_list[[i]]
@@ -70,6 +71,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same location of NA entries")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(dat_list)){
     out1 <- MidnightToMidnight_out_list[[i]]
     out2 <- MidnightToMidnight_JU_out_list[[i]]
@@ -81,6 +83,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same values of non-NA entries")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(dat_list)){
     out1 <- MidnightToMidnight_out_list[[i]]
     out2 <- MidnightToMidnight_JU_out_list[[i]]

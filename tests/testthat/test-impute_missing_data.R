@@ -104,6 +104,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK; used imputeFromValidDaysOnly = FALSE) with the previous implementation (@JU): ",
   "Compare imputed observations for valid days only")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(acc_list)){ # i <- 1
     out1 <- ImputeMissingData_F_out_list[[i]]
     out2 <- ImputeMissingData_JU_out_list[[i]]
@@ -119,6 +120,7 @@ test_that(test_that_desc, {
 test_that_desc <- paste0(
   "Test that NA values are not replaced in activity count vector (i.e. before/after data collection start/end)")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(acc_list)){ # i <- 1
     acc   <- acc_list[[i]]
     out1 <- ImputeMissingData_out_list[[i]]
@@ -131,6 +133,7 @@ test_that(test_that_desc, {
 test_that_desc <- paste0(
   "Test that values not marked as wear OR non-valid days remain unchanged")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(acc_list)){ # i <- 1
     acc  <- acc_list[[i]]
     out1 <- ImputeMissingData_out_list[[i]]
@@ -144,6 +147,7 @@ test_that(test_that_desc, {
 
 
 test_that("Test that output value remained unchanged", {
+  skip_on_cran()
     vec_act <- sapply(ImputeMissingData_out_list, function(out) sum(out, na.rm = TRUE))
     vec_exp <- c(18677002, 20765032.5, 7789617, 2896256)
     expect_equal(vec_act, vec_exp)
@@ -151,6 +155,7 @@ test_that("Test that output value remained unchanged", {
 
 
 test_that("Test that method returns error if any inout data not in MidnightToMidnight form", {
+  skip_on_cran()
   i <- 1
   acc             <- acc_list[[i]]
   wear_flag       <- wear_flag_list[[i]]
@@ -169,6 +174,7 @@ test_that("Test that method returns error if any inout data not in MidnightToMid
 
 
 test_that("Test data is unchanged if no non-wear is detected", {
+  skip_on_cran()
   i <- 1
   acc            <- acc_list[[i]]
   wear_flag      <- rep(1, length(acc))
@@ -179,6 +185,7 @@ test_that("Test data is unchanged if no non-wear is detected", {
 
 
 test_that("Test data is unchanged if no valid days", {
+  skip_on_cran()
   i <- 1
   acc            <- acc_list[[i]]
   wear_flag      <- wear_flag_list[[i]]

@@ -59,6 +59,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same number of NA entries")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(dat_list)){
     out1 <- WearNonWear_out_list[[i]]
     out2 <- WearNonWear_JU_out_list[[i]]
@@ -71,6 +72,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same location of NA entries")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(dat_list)){
     out1 <- WearNonWear_out_list[[i]]
     out2 <- WearNonWear_JU_out_list[[i]]
@@ -82,6 +84,7 @@ test_that_desc <- paste0(
   "Compare updated implementation (@MK) with the previous implementation (@JU): ",
   "The same values of non-NA entries")
 test_that(test_that_desc, {
+  skip_on_cran()
   for (i in 1:length(dat_list)){
     out1 <- WearNonWear_out_list[[i]]
     out2 <- WearNonWear_JU_out_list[[i]]
@@ -94,12 +97,14 @@ test_that(test_that_desc, {
 ## Sub-context -----------------------------------------------------------------
 
 test_that("Test method correctly computes non-wear: case 1", {
+  skip_on_cran()
   ac_vec <- rep(c(0,0,0,1), 10)
   out <- get_wear_flag(ac_vec, 4)
   expect_true(all(out == 1))
 })
 
 test_that("Test method correctly computes non-wear: case 2", {
+  skip_on_cran()
   ac_vec <- rep(c(0,0,0,1), 10)
   out <- get_wear_flag(ac_vec, 3)
   expect_true(all(out[1:4] == c(0,0,0,1)))
@@ -107,6 +112,7 @@ test_that("Test method correctly computes non-wear: case 2", {
 })
 
 test_that("Test method correctly computes non-wear: case 3", {
+  skip_on_cran()
   ac_vec <- rep(c(0,0,0,1), 10)
   out <- get_wear_flag(ac_vec, 2)
   expect_true(all(out[1:4] == c(0,0,0,1)))
@@ -114,6 +120,7 @@ test_that("Test method correctly computes non-wear: case 3", {
 })
 
 test_that("Test method correctly computes non-wear: case 4", {
+  skip_on_cran()
   ac_vec <- rep(c(0,0,0,0.5), 10)
   out <- get_wear_flag(ac_vec, 2)
   expect_true(all(out[1:4] == c(0,0,0,1)))
@@ -122,12 +129,14 @@ test_that("Test method correctly computes non-wear: case 4", {
 
 
 test_that("Test method correctly computes non-wear: case 5", {
+  skip_on_cran()
   ac_vec <- rep(c(0,0,0,0), 10)
   out <- get_wear_flag(ac_vec, 4)
   expect_true(all(out == 0))
 })
 
 test_that("Test method correctly computes non-wear: case 6", {
+  skip_on_cran()
   set.seed(1)
   ac_vec <- rep(c(runif(2, 0.1), 0,0), 10)
   out <- get_wear_flag(ac_vec, 3)
