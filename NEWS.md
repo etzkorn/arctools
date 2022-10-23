@@ -1,3 +1,7 @@
+# arctools 1.1.5
+
+* Add `testthat::skip_on_cran()` to the tests to aid the errors from devel linux and devel windows which I am unable to reproduce. This is to retain the package on CRAN. 
+
 # arctools 1.1.3
 
 * Minor changes in vignette. 
