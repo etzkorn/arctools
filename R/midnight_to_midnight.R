@@ -42,7 +42,9 @@ midnight_to_midnight <- function(acc, acc_ts){
   ## Added 2021-01-06 as protective measure in case one fails to submit
   ## acc_ts as lubridate::ymd_hms()-generated is.POSIXct
   ## (note: base::as.POSIXct()-generated IS NOT OK!)
-  acc_ts <- lubridate::ymd_hms(acc_ts)
+  if(class(acc_ts)[1]!= "POSIXct"){
+    acc_ts <- lubridate::ymd_hms(acc_ts)
+  }
 
   ## Define day-specific minute for each observation
   obs_df <- data.frame(acc = acc, acc_ts = acc_ts, stringsAsFactors = FALSE)
